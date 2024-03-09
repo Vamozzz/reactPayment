@@ -1,14 +1,17 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { FirstThemeProvider } from "../src/firstModule/page";
-import { FirstModuleProvider } from "../src/provider/invoiceProvider";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import RouteComponent from "./routeComponent";
+import NotFoundPage from "./components/notfound";
+
 function App() {
   return (
-    <div className=" bg-[#F1F1F1] lg:w-[500px] m-auto">
-      <FirstModuleProvider>
-        <FirstThemeProvider />
-      </FirstModuleProvider>
-    </div>
+    <Router>
+      <Routes>
+      <Route path="*" element={<NotFoundPage />} />
+        <Route path="/:dynamicData" element={<RouteComponent />} />
+      </Routes>
+    </Router>
   );
 }
 

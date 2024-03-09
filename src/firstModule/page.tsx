@@ -95,9 +95,15 @@ export const FirstThemeProvider = () => {
       <PaymentLinkContext.Provider
         value={{ linkData: paymentLink, loading: false, updatePaymentLink }}
       >
-        {/* {invoiceData?.template_id === 1 && <FirstTheme />} */}
-        {/* {invoiceData?.template_id === 1 && <SecondTheme />} */}
-        {invoiceData?.template_id === 1 && <ThirdTheme />}
+        {invoiceData?.template_id === 1 ? (
+          <FirstTheme />
+        ) : invoiceData?.template_id === 2 ? (
+          <SecondTheme />
+        ) : invoiceData?.template_id === 3 ? (
+          <ThirdTheme />
+        ) : (
+          <FirstTheme />
+        )}
       </PaymentLinkContext.Provider>
     </FirstThemeContext.Provider>
   );

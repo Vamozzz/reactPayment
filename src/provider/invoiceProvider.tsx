@@ -7,6 +7,7 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
+import { useParams } from 'react-router-dom';
 
 type ContextData = {
   invoiceData: {
@@ -44,9 +45,12 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
   const [invoiceData, setInvoiceData] =
     useState<ContextData["invoiceData"]>(null);
   const [loading, setLoading] = useState(true);
-  const urlParams = window.location.pathname;
-  const urlParamsString = urlParams?.split("/");
-  const invoiceId = urlParamsString?.[urlParamsString.length - 1];
+  // const urlParams = window.location.pathname;
+  // const urlParamsString = urlParams?.split("/");
+  // const invoiceId = urlParamsString?.[urlParamsString.length - 1];
+  const { dynamicData } = useParams();
+  console.log(dynamicData,"id");
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +65,7 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              invoice_id: invoiceId,
+              invoice_id: dynamicData,
             }),
           }
         );
@@ -83,10 +87,10 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
       }
     };
     fetchData();
-  }, []);
+  }, [dynamicData]);
 
-  console.log("urlParams", urlParams);
-  console.log(loading, "==>loading");
+  // console.log("urlParams", urlParams);
+  // console.log(loading, "==>loading");
 
   return (
     <FirstModuleContext.Provider value={{ invoiceData, loading }}>
