@@ -5,6 +5,7 @@ import React, { FC, useRef, useState } from "react";
 import successIconSvg from "../assets/successicon.svg";
 import shareSvg from "../assets/share.svg";
 import { toBlob, toPng } from "html-to-image";
+import downloads from "../assets/downloads.png";
 
 interface successProps {
   paymentData: {
@@ -115,7 +116,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             }),
           ],
           title: "Image",
-          text: "image",
+          text: " If your browser does not support Sharing, Kindly download the invoice",
         };
         try {
           if (navigator && navigator.canShare && !navigator.canShare(data)) {
@@ -266,6 +267,27 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
                 className=""
               />
               <p className="">Share Reciept</p>
+            </button>
+          </CardContent>
+        </Card>
+
+        <Card
+          sx={{ minWidth: 275, borderRadius: 4 }}
+          className="w-full bg-[rgb(52,168,83)] mt-4"
+        >
+          <CardContent className="flex items-center justify-center ">
+            <button
+              onClick={htmlToImageConvert}
+              className="flex items-center justify-center gap-4"
+            >
+              <img
+                src={downloads}
+                alt="logo"
+                height={25}
+                width={25}
+                className=""
+              />
+              <p className="">Download Reciept</p>
             </button>
           </CardContent>
         </Card>

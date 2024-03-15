@@ -57,6 +57,7 @@ const Payment: React.FC<PaymentProps> = () => {
         }
 
         const data = await response.json();
+        // setPaymentStatus(data?.data);
         setPaymentStatus(data?.data);
         setPaymentData(data?.all_data);
         console.log(data?.data);
@@ -69,6 +70,7 @@ const Payment: React.FC<PaymentProps> = () => {
         }
       }
     };
+
     const intervalId = setInterval(async () => {
       if (paymentStatus === " " || paymentStatus === "PENDING") {
         // console.log("1===", paymentStatus, "========>");
@@ -92,7 +94,7 @@ const Payment: React.FC<PaymentProps> = () => {
           ) : paymentStatus === "SUCCESS" ? (
             <PaymentSuccess paymentData={paymentData} />
           ) : paymentStatus === "FAILURE" ? (
-            <PaymentFailed  paymentData={paymentData} />
+            <PaymentFailed paymentData={paymentData} />
           ) : (
             <PaymentStatus paymentData={paymentData} />
           )}

@@ -8,6 +8,7 @@ import warningSvg from "../assets/warning.svg";
 import questionIconSvg from "../assets/questionIcon.svg";
 import { toBlob, toPng } from "html-to-image";
 import shareSvg from "../assets/share.svg";
+import downloads from "../assets/downloads.png";
 
 interface failedProps {
   paymentData: {
@@ -53,7 +54,7 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
             }),
           ],
           title: "Image",
-          text: "image",
+          text: " If your browser does not support Sharing, Kindly download the invoice",
         };
         try {
           if (navigator && navigator.canShare && !navigator.canShare(data)) {
@@ -66,7 +67,9 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
             await navigator.share(data);
           } else {
             console.error("Sharing not supported");
-            alert("Your browser does not support Sharing , you can download the  image instead.");
+            alert(
+              "Your browser does not support Sharing , you can download the  image instead."
+            );
             htmlToImageConvert();
           }
         } catch (err) {
@@ -248,6 +251,26 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
                 className=""
               />
               <p className="">Share Reciept</p>
+            </button>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{ minWidth: 275, borderRadius: 4 }}
+          className="w-full bg-[rgb(52,168,83)] mt-4"
+        >
+          <CardContent className="flex items-center justify-center ">
+            <button
+              onClick={htmlToImageConvert}
+              className="flex items-center justify-center gap-4"
+            >
+              <img
+                src={downloads}
+                alt="logo"
+                height={25}
+                width={25}
+                className=""
+              />
+              <p className="">Download Reciept</p>
             </button>
           </CardContent>
         </Card>
