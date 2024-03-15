@@ -14,9 +14,9 @@ export default function AmountPayable() {
     <div className="">
       <Card sx={{ minWidth: 275, borderRadius: 4 }}>
         <CardContent>
-          <div className=" flex justify-between items-end p-1 ">
+          <div className="p-1 ">
             <div className="heading">
-              <p>amount payable:</p>
+              <p>Amount Payable:</p>
             </div>
 
             <div>
@@ -25,12 +25,14 @@ export default function AmountPayable() {
               </p>
             </div>
           </div>
-          <div className="p-1">
-            <p className="subHeader uppercase">payment Id</p>
-            <p className="paymentId uppercase">{invoiceData?.transaction_id}</p>
-          </div>
+          {/* <div className="p-1">
+            <p className="uppercase subHeader">payment Id</p>
+            <p className="uppercase paymentId">{invoiceData?.transaction_id}</p>
+          </div> */}
         </CardContent>
       </Card>
     </div>
   );
 }
+
+

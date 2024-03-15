@@ -27,6 +27,8 @@ interface Props {
 }
 const openWindow = window;
 
+const iOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 const Root = styled("div")(({ theme }) => ({
   height: "100%",
   backgroundColor:
@@ -69,8 +71,9 @@ export default function DetailsPuller(props: Props) {
   const container = window !== undefined ? window().document.body : undefined;
 
   return (
-    // <Root>
-    <div onClick={() => setOpen(!open)}>
+    <div
+    // onClick={() => setOpen(!open)}
+    >
       <CssBaseline />
       <Global
         styles={{
@@ -80,8 +83,9 @@ export default function DetailsPuller(props: Props) {
           },
         }}
       />
-
       <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
         container={container}
         anchor="bottom"
         open={open}
@@ -106,7 +110,7 @@ export default function DetailsPuller(props: Props) {
         >
           <Puller />
 
-          <div className="p-8 flex justify-around items-center ">
+          <div className="flex items-center justify-around p-8 ">
             <div className="flex flex-col gap-1">
               <p className="font-semibold text-[28px]">{` ₹ ${invoiceData?.payable_amount}`}</p>
               <button
@@ -122,19 +126,37 @@ export default function DetailsPuller(props: Props) {
               }  rounded-md`}
             >
               <Button
-                variant="contained"
+                style={{ backgroundColor: "#5A5CE7", color: "white" }}
                 disabled={!linkData?.link}
                 size="large"
-                
                 onClick={(event) => {
                   event.stopPropagation();
-                  console.log("click pay",window !== undefined ,linkData?.link);
+                  console.log(
+                    "click pay",
+                    window !== undefined,
+                    linkData?.link
+                  );
 
+                  // if (linkData?.link) {
+                  //   const paymentAppLink = linkData.link;
+                  //   openWindow?.open(paymentAppLink, "_blank");
+                  //   setSubmitted(true);
+                  // }
                   if (linkData?.link) {
                     const paymentAppLink = linkData.link;
-                    openWindow?.open(paymentAppLink, "_blank");
-                    setSubmitted(true);
-
+                    const newWindow = openWindow?.open(
+                      paymentAppLink,
+                      "_blank"
+                    );
+                    if (newWindow) {
+                      newWindow.focus(); // Bring the new window to focus
+                      setSubmitted(true);
+                    } else {
+                      // Inform the user about pop-up blocking
+                      alert(
+                        "Popup blocked. Please allow pop-ups for this site and try again."
+                      );
+                    }
                   }
                 }}
               >
@@ -158,31 +180,31 @@ export default function DetailsPuller(props: Props) {
         >
           <Card sx={{ minWidth: 275, borderRadius: 4 }}>
             <CardContent>
-              <div className="flex flex-col justify-around items-start gap-4 p-2">
-                <p className="text-gray-800 font-poppins text-base font-medium leading-6 ">
+              <div className="flex flex-col items-start justify-around gap-4 p-2">
+                <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
                   Payment request from {invoiceData?.vendor_name}
                 </p>
                 <div>
-                  <p className="text-gray-600 font-poppins text-xs font-medium leading-6 uppercase">
+                  <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                     payment for
                   </p>
-                  <p className="text-black font-poppins text-base font-medium leading-6 capitalize">
+                  <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
                     {invoiceData?.vendor_name}
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-600 font-poppins text-xs font-medium leading-6 uppercase">
+                  <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                     AMOUNT PAYABLE
                   </p>
-                  <p className="text-black font-poppins text-base font-medium leading-6 capitalize">
+                  <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
                     INR {invoiceData?.payable_amount}
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-600 font-poppins text-xs font-medium leading-6 uppercase">
+                  <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                     payment Id
                   </p>
-                  <p className="text-black font-poppins text-base font-medium leading-6 capitalize">
+                  <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
                     {invoiceData?.transaction_id}
                   </p>
                 </div>
@@ -192,6 +214,5 @@ export default function DetailsPuller(props: Props) {
         </StyledBox>
       </SwipeableDrawer>
     </div>
-    // </Root>
   );
 }

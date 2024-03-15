@@ -22,15 +22,72 @@ interface PaymentProps {
   transactionStatus?: string;
 }
 
+interface PaymentData {
+  txn_amount: string;
+  txn_status: string;
+  txn_orderid: string;
+  txn_txnid: string;
+  txn_time: string;
+}
+
 const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
   const [paymentStatus, setPaymentStatus] = useState(" ");
   const { invoiceData } = useFirstModule();
+  const [paymentData, setPaymentData] = useState<PaymentData>({
+    txn_amount: "",
+    txn_status: "",
+    txn_orderid: "",
+    txn_txnid: "",
+    txn_time: "",
+  });
 
   const handleCall = () => {
     window.open(`tel:${invoiceData?.vendor_number}`, "_self");
   };
 
+  // useEffect(() => {
+  //   const fetchTransactionStatus = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://api.vampay.in/Merchent/InvoiceTransactionWebhook",
+  //         {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             invoice_id: invoiceData?.invoiceId,
+  //           }),
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error("API request failed");
+  //       }
+
+  //       const data = await response.json();
+  //       setPaymentStatus(data?.data);
+  //     } catch (error) {
+  //       setPaymentStatus("FAILURE");
+  //     }
+  //   };
+
+  //   const intervalId = setInterval(async () => {
+  //     if (paymentStatus === " " || paymentStatus === "PENDING") {
+  //       // console.log("1===", paymentStatus, "========>");
+  //       await fetchTransactionStatus();
+  //     } else if (paymentStatus === "FAILURE" || paymentStatus === "SUCCESS") {
+  //       // console.log("2===", paymentStatus, "========>");
+  //       clearInterval(intervalId);
+  //     }
+  //   }, 3000);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [invoiceData?.invoiceId, paymentStatus]);
+
   useEffect(() => {
+    let apiCallCount = 0;
     const fetchTransactionStatus = async () => {
       try {
         const response = await fetch(
@@ -52,11 +109,17 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
 
         const data = await response.json();
         setPaymentStatus(data?.data);
+        setPaymentData(data?.all_data);
+        console.log(data?.data);
       } catch (error) {
-        setPaymentStatus("FAILURE");
+        console.log(error);
+        if (apiCallCount > 5) {
+          setPaymentStatus("FAILURE");
+        } else {
+          apiCallCount++;
+        }
       }
     };
-
     const intervalId = setInterval(async () => {
       if (paymentStatus === " " || paymentStatus === "PENDING") {
         // console.log("1===", paymentStatus, "========>");
@@ -74,7 +137,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
   return (
     <div>
       {paymentStatus !== " " ? (
-        <div className="p-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-6">
           {paymentStatus === "SUCCESS" && (
             <Card
               sx={{
@@ -83,11 +146,12 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-2 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-2">
                   <div>
                     <p className="font-medium text-[22px] text-[#2E313A]">
                       Payment Success
                     </p>
+                    <p>{paymentData?.txn_time}</p>
                   </div>
                   <div className="flex gap-1">
                     <p className="font-medium text-[22px] text-[#2E313A]">
@@ -150,7 +214,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-2 justify-center items-center ">
+                <div className="flex flex-col items-center justify-center gap-2 ">
                   <div>
                     <img
                       src={SpinnerTheme3}
@@ -163,6 +227,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
                     <p className="font-medium text-[22px] text-black">
                       Processing Payment
                     </p>
+                    <p>{paymentData?.txn_time}</p>
                   </div>
                   <div className="flex gap-1 ">
                     <p className="font-medium text-[22px] text-black">
@@ -219,13 +284,14 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-3 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-3">
                   <div>
                     <p className="font-medium text-[22px] text-black">
                       Transaction Failed
                     </p>
+                    <p>{paymentData?.txn_time}</p>
                   </div>
-                  <div className="flex gap-1 items-center justify-center">
+                  <div className="flex items-center justify-center gap-1">
                     <p className="font-medium text-[22px] text-black">
                       ₹ {invoiceData?.payable_amount}
                     </p>
@@ -247,7 +313,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
                         )}
                     </p>
                   </div>
-                  <div className="bg-white rounded-2xl p-4 flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 p-4 bg-white rounded-2xl">
                     <p className="font-medium text-[14px]">
                       There is a technical issue at your bank. Please try after
                       some time.
@@ -303,12 +369,12 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
           )}
           <Queries />
           <FooterLink />
-          <div className="flex flex-col gap-5  items-center pb-36">
+          <div className="flex flex-col items-center gap-5 pb-36">
             <div>
               <p>your money is always safe</p>
             </div>
 
-            <div className=" w-full flex justify-around items-center">
+            <div className="flex items-center justify-around w-full ">
               <div>
                 <img src={PCIDSS3} width={80} height={38} alt="logo" />
               </div>

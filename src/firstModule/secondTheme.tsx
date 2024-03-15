@@ -27,12 +27,12 @@ const SecondTheme = () => {
           <SelectPayment />
           <Queries />
           <FooterLink />
-          <div className="flex flex-col gap-5  items-center pb-1">
+          <div className="flex flex-col items-center gap-5 pb-1">
             <div>
               <p>your money is always safe</p>
             </div>
 
-            <div className=" w-full flex justify-around items-center">
+            <div className="flex items-center justify-start w-full gap-4">
               <div>
                 <img src={pcid} width={80} height={38} alt="logo" />
               </div>

@@ -18,7 +18,7 @@ import CvvInfo from "./cvvInfo";
 import upiSvg from "../assets/upi.svg";
 import phonepaySvg from "../assets/phonepay.svg";
 import paytmSvg from "../assets/paytm.svg";
-import bhimlogoSvg from "../assets/bhimlogo.svg";
+import bhimlogoSvg from "../assets/bhimlogonew.svg";
 import gpaylogoSvg from "../assets/gpaylogo.svg";
 import addmoreSvg from "../assets/addmore.svg";
 import cardSvg from "../assets/card.svg";
@@ -45,6 +45,7 @@ export default function PaymentType() {
   const [isNetBanking, setNetBanking] = React.useState(false);
   const { invoiceLink } = useFirstTheme();
   const { linkData, updatePaymentLink } = usePaymentLink();
+  const [isAvailable, setAvailable] = React.useState(false);
   // const [showCvvInfo, setCvvInfo] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -107,10 +108,10 @@ export default function PaymentType() {
     }
   };
 
-//    const redirectToPaymentApp = (selectedGateway: string) => {
-// console.log(selectedGateway,"wertyui");
+  //    const redirectToPaymentApp = (selectedGateway: string) => {
+  // console.log(selectedGateway,"wertyui");
 
-//    }
+  //    }
 
   const paymentMethods = [
     {
@@ -239,12 +240,12 @@ export default function PaymentType() {
                 key={index}
                 className={`p-1 w-1/5 flex flex-col justify-start items-center gap-2 ${
                   linkData?.app === item.appName
-                    ? "border border-purple-500 rounded-sm bg-white"
+                    ? "border border-purple-500 rounded-lg bg-white"
                     : null
                 }`}
               >
                 <img src={item.icon} alt="." height={40} width={40} />
-                <p className="text-wrap">{item.name}</p>
+                <p className={`text-wrap ${ linkData?.app === item.appName ?  " ":"text-[#ABABAB]"}`}>{item.name}</p>
               </button>
             ))}
           </div>
@@ -256,53 +257,60 @@ export default function PaymentType() {
           <ListItemText primary="CARD" />
           {openCard ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse
-          in={openCard}
-          timeout="auto"
-          unmountOnExit
-          sx={{ display: "flex", flexDirection: "row" }}
-        >
-          <div className="flex gap-3 flex-wrap p-4 bg-[#F5F5F5]">
-            <div className=" w-full flex justify-between items-center border rounded-md p-2">
-              <input
-                placeholder="Card Number"
-                className="w-full  bg-transparent outline-none"
-              />
-              {/* <img
-                src={"/tag.svg"}
-                alt="logo"
-                height={30}
-                width={30}
-                className="ml-2"
-              /> */}
-            </div>
-            <input
-              placeholder="Name on card"
-              className="w-full p-2 rounded-md bg-transparent border outline-none"
-            />
-            <div className="flex gap-3">
-              <input
-                placeholder="Valid Thru (MM/YY)"
-                className="w-2/3 p-2 rounded-md bg-transparent border outline-none"
-              />
-              <div className=" w-1/3 flex justify-between items-center border rounded-md p-2">
+        {isAvailable ? (
+          <Collapse
+            in={openCard}
+            timeout="auto"
+            unmountOnExit
+            sx={{ display: "flex", flexDirection: "row" }}
+          >
+            <div className="flex gap-3 flex-wrap p-4 bg-[#F5F5F5]">
+              <div className="flex items-center justify-between w-full p-2 border rounded-md ">
                 <input
-                  placeholder="CVV"
-                  className="rounded-md bg-transparent  overflow-x-hidden outline-none"
+                  placeholder="Card Number"
+                  className="w-full bg-transparent outline-none"
                 />
-                <button onClick={handleClick}>
-                  <img
-                    src={info}
-                    alt="logo"
-                    height={30}
-                    width={30}
-                    className="ml-2"
+              </div>
+              <input
+                placeholder="Name on card"
+                className="w-full p-2 bg-transparent border rounded-md outline-none"
+              />
+              <div className="flex gap-3">
+                <input
+                  placeholder="Valid Thru (MM/YY)"
+                  className="w-2/3 p-2 bg-transparent border rounded-md outline-none"
+                />
+                <div className="flex items-center justify-between w-1/3 p-2 border rounded-md ">
+                  <input
+                    placeholder="CVV"
+                    className="overflow-x-hidden bg-transparent rounded-md outline-none"
                   />
-                </button>
+                  <button onClick={handleClick}>
+                    <img
+                      src={info}
+                      alt="logo"
+                      height={30}
+                      width={30}
+                      className="ml-2"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </Collapse>
+          </Collapse>
+        ) : (
+          <Collapse
+            in={openCard}
+            timeout="auto"
+            unmountOnExit
+            sx={{ display: "flex", flexDirection: "row" }}
+          >
+            <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
+              <p>This functionality is currently unavailable for this trader</p>
+            </div>
+          </Collapse>
+        )}
+
         <ListItemButton onClick={handlePayLater}>
           <ListItemIcon className="">
             <img
@@ -316,41 +324,49 @@ export default function PaymentType() {
           <ListItemText primary="PAY LATER" />
           {payLater ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={payLater} timeout="auto" unmountOnExit>
-          <div className="bg-[#F5F5F5] flex flex-col px-2">
-            {payLaterArray.map((item, index) => (
-              <div
-                key={index}
-                className="flex justify-between p-4 items-center border-dashed border-b"
-              >
-                <div className="flex items-center gap-4">
-                  <img src={item.icon} alt="." height={40} width={40} />
-                  <p>{item.name}</p>
+        {isAvailable ? (
+          <Collapse in={payLater} timeout="auto" unmountOnExit>
+            <div className="bg-[#F5F5F5] flex flex-col px-2">
+              {payLaterArray.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 border-b border-dashed"
+                >
+                  <div className="flex items-center gap-4">
+                    <img src={item.icon} alt="." height={40} width={40} />
+                    <p>{item.name}</p>
+                  </div>
+                  <div>
+                    {/* <img src={item.icon} alt="." height={40} width={40} />
+                     */}
+                    <Radio
+                      checked={false}
+                      // onChange={handleChange}
+                      value="b"
+                      name="radio-buttons"
+                      inputProps={{ "aria-label": "B" }}
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          fontSize: 25,
+                          background: "white",
+                          borderRadius: 10,
+                        },
+                        margin: 0,
+                        padding: 0,
+                      }}
+                    />
+                  </div>
                 </div>
-                <div>
-                  {/* <img src={item.icon} alt="." height={40} width={40} />
-                   */}
-                  <Radio
-                    checked={false}
-                    // onChange={handleChange}
-                    value="b"
-                    name="radio-buttons"
-                    inputProps={{ "aria-label": "B" }}
-                    sx={{
-                      "& .MuiSvgIcon-root": {
-                        fontSize: 25,
-                        background: "white",
-                        borderRadius: 10,
-                      },
-                      margin: 0,
-                      padding: 0,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </Collapse>
+              ))}
+            </div>
+          </Collapse>
+        ) : (
+          <Collapse in={payLater} timeout="auto" unmountOnExit>
+            <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
+              <p>This functionality is currently unavailable for this trader</p>
+            </div>
+          </Collapse>
+        )}
         <ListItemButton onClick={handleNetBanking}>
           <ListItemIcon className="">
             <img
@@ -364,39 +380,47 @@ export default function PaymentType() {
           <ListItemText primary="NET BANKING" />
           {isNetBanking ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={isNetBanking} timeout="auto" unmountOnExit>
-          <div className="bg-[#F5F5F5] flex flex-col px-2">
-            {netBankingArray.map((item, index) => (
-              <div
-                key={index}
-                className="flex justify-between p-4 items-center border-dashed border-b"
-              >
-                <div className="flex items-center gap-4">
-                  <img src={item.icon} alt="." height={40} width={40} />
-                  <p>{item.name}</p>
+        {isAvailable ? (
+          <Collapse in={isNetBanking} timeout="auto" unmountOnExit>
+            <div className="bg-[#F5F5F5] flex flex-col px-2">
+              {netBankingArray.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 border-b border-dashed"
+                >
+                  <div className="flex items-center gap-4">
+                    <img src={item.icon} alt="." height={40} width={40} />
+                    <p>{item.name}</p>
+                  </div>
+                  <div>
+                    <Radio
+                      checked={false}
+                      // onChange={handleChange}
+                      value="b"
+                      name="radio-buttons"
+                      inputProps={{ "aria-label": "B" }}
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          fontSize: 25,
+                          background: "white",
+                          borderRadius: 10,
+                        },
+                        margin: 0,
+                        padding: 0,
+                      }}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <Radio
-                    checked={false}
-                    // onChange={handleChange}
-                    value="b"
-                    name="radio-buttons"
-                    inputProps={{ "aria-label": "B" }}
-                    sx={{
-                      "& .MuiSvgIcon-root": {
-                        fontSize: 25,
-                        background: "white",
-                        borderRadius: 10,
-                      },
-                      margin: 0,
-                      padding: 0,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </Collapse>
+              ))}
+            </div>
+          </Collapse>
+        ) : (
+          <Collapse in={isNetBanking} timeout="auto" unmountOnExit>
+            <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
+              <p>This functionality is currently unavailable for this trader</p>
+            </div>
+          </Collapse>
+        )}
       </List>
       {/* {showCvvInfo && ( */}
       <CvvInfo
