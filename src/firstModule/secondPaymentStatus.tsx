@@ -18,6 +18,7 @@ import pciDssIcon from "../assets/PCIDSS3.svg";
 import secureIcon from "../assets/SECURE3.svg";
 import makeInIndiaIcon from "../assets/MAKEININDIA3.svg";
 import digitalIndiaIcon from "../assets/DIGITALINDIA3.svg";
+import { useFirstTheme } from "./page";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -26,9 +27,10 @@ interface PaymentProps {
 const SecondPaymentStatus: React.FC<PaymentProps> = () => {
   const [paymentStatus, setPaymentStatus] = useState<string>(" ");
   const { invoiceData } = useFirstModule();
+  const {invoiceLink} = useFirstTheme();
 
   const handleCall = () => {
-    window.open(`tel:${invoiceData?.vendor_number}`, "_self");
+    window.open(`tel:${invoiceData?.merchant_mobile}`, "_self");
   };
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              invoice_id: invoiceData?.invoiceId,
+              invoice_id: invoiceLink?.invoice_id,
             }),
           }
         );
@@ -58,7 +60,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
       }
     };
     const intervalId = setInterval(async () => {
-      if (paymentStatus === " " || paymentStatus === "PENDING") {
+      if (paymentStatus === " " || paymentStatus === "Pending") {
         // console.log("1===", paymentStatus, "========>");
         await fetchTransactionStatus();
       } else if (paymentStatus === "FAILURE" || paymentStatus === "SUCCESS") {
@@ -69,12 +71,12 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [invoiceData?.invoiceId, paymentStatus]);
+  }, [invoiceLink?.invoice_id, paymentStatus]);
 
   return (
     <div>
       {paymentStatus !== " " ? (
-        <div className="p-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-6">
           {paymentStatus === "SUCCESS" && (
             <Card
               sx={{
@@ -84,7 +86,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-2 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-2">
                   <div>
                     <p className="font-medium text-[22px] text-white">
                       Payment Success
@@ -92,7 +94,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div className="flex gap-1">
                     <p className="font-medium text-[22px] text-white">
-                      ₹ {invoiceData?.payable_amount}
+                      ₹ {invoiceLink?.amount}
                     </p>
                     <img
                       src={paymentSuccessIcon}
@@ -103,11 +105,11 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div>
                     <p className="font-medium text-[12px] text-white">
-                      {invoiceData?.payable_amount &&
+                      {invoiceLink?.amount &&
                         numberToWords(
-                          Math.floor(Number(invoiceData?.payable_amount))
+                          Math.floor(Number(invoiceLink?.amount))
                         )}
-                      {invoiceData?.payable_amount == "0" || "1"
+                      {invoiceLink?.amount == "0" || "1"
                         ? " Rupee"
                         : " Rupees"}
                     </p>
@@ -116,7 +118,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
               </CardContent>
             </Card>
           )}
-          {paymentStatus === "PENDING" && (
+          {paymentStatus === "Pending" && (
             <Card
               sx={{
                 minWidth: 275,
@@ -125,7 +127,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-2 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-2">
                   <div>
                     <img src={spinnerIcon} width={80} height={38} alt="logo" />
                   </div>
@@ -136,16 +138,16 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div className="flex gap-1 ">
                     <p className="font-medium text-[22px] text-white">
-                      ₹ {invoiceData?.payable_amount}
+                      ₹ {invoiceLink?.amount}
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-[12px] text-white">
-                      {invoiceData?.payable_amount &&
+                      {invoiceLink?.amount &&
                         numberToWords(
-                          Math.floor(Number(invoiceData?.payable_amount))
+                          Math.floor(Number(invoiceLink?.amount))
                         )}
-                      {invoiceData?.payable_amount == "0" || "1"
+                      {invoiceLink?.amount == "0" || "1"
                         ? " Rupee"
                         : " Rupees"}
                     </p>
@@ -154,7 +156,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
               </CardContent>
             </Card>
           )}
-          {paymentStatus === "FAILURE" && (
+          {paymentStatus === "Failure" && (
             <Card
               sx={{
                 minWidth: 275,
@@ -163,15 +165,15 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-3 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-3">
                   <div>
                     <p className="font-medium text-[22px] text-white">
                       Transaction Failed
                     </p>
                   </div>
-                  <div className="flex gap-1 items-center justify-center">
+                  <div className="flex items-center justify-center gap-1">
                     <p className="font-medium text-[22px] text-white">
-                      ₹ {invoiceData?.payable_amount}
+                      ₹ {invoiceLink?.amount}
                     </p>
                     <img
                       src={paymentFailedIcon}
@@ -182,16 +184,16 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div>
                     <p className="font-medium text-[12px] text-white">
-                      {invoiceData?.payable_amount &&
+                      {invoiceLink?.amount &&
                         numberToWords(
-                          Math.floor(Number(invoiceData?.payable_amount))
+                          Math.floor(Number(invoiceLink?.amount))
                         )}
-                      {invoiceData?.payable_amount == "0" || "1"
+                      {invoiceLink?.amount == "0" || "1"
                         ? " Rupee"
                         : " Rupees"}
                     </p>
                   </div>
-                  <div className="bg-white rounded-2xl p-4 flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 p-4 bg-white rounded-2xl">
                     <p className="font-medium text-[14px]">
                       There is a technical issue at your bank. Please try after
                       some time.
@@ -207,7 +209,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
                   >
                     <CardContent>
                       <div
-                        className="flex gap-4 justify-center items-center"
+                        className="flex items-center justify-center gap-4"
                         onClick={handleCall}
                       >
                         <img
@@ -230,10 +232,10 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
               <div className="flex flex-col gap-2 p-2 ">
                 <div>
                   <p className="font-medium text-[16px]">
-                    To: {invoiceData?.vendor_name}
+                    To: {invoiceData?.merchnat_name}
                   </p>
                   <p className="font-medium text-[16px] text-[#B5B5B5]">
-                    {invoiceData?.transaction_id}
+                    {invoiceLink?.order_id}
                   </p>
                 </div>
                 <div>
@@ -255,12 +257,12 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
           </Card>
           <Queries />
           <FooterLink />
-          <div className="flex flex-col gap-5  items-center pb-36">
+          <div className="flex flex-col items-center gap-5 pb-36">
             <div>
               <p>your money is always safe</p>
             </div>
 
-            <div className=" w-full flex justify-around items-center">
+            <div className="flex items-center justify-around w-full ">
               <div>
                 <img src={pciDssIcon} width={80} height={38} alt="logo" />
               </div>

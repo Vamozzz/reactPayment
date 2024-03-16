@@ -7,25 +7,18 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import FirstTheme from "../firstModule/firstTheme";
 
 type ContextData = {
   invoiceData: {
-    payable_amount: string;
-    customerName: string;
-    customerMobile: string;
-    invoiceId: string;
+    merchnat_id: string;
+    merchnat_name: string;
+    bg_color: string;
     merchant_logo: string;
-    merchant_name_logo: string;
-    template_id: number;
-    order_id: string;
-    transaction_id: string;
-    settlement_time: string;
-    txn_status: string;
-    vendor_name: string;
-    vendor_email: string;
-    vendor_number: string;
-    bg_color?: string;
+    template_id: string | number;
+    merchant_email: string;
+    merchant_mobile: string;
   } | null;
   loading: boolean;
 };
@@ -45,27 +38,25 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
   const [invoiceData, setInvoiceData] =
     useState<ContextData["invoiceData"]>(null);
   const [loading, setLoading] = useState(true);
-  // const urlParams = window.location.pathname;
-  // const urlParamsString = urlParams?.split("/");
-  // const invoiceId = urlParamsString?.[urlParamsString.length - 1];
   const { dynamicData } = useParams();
-  console.log(dynamicData,"id");
-  
+  console.log(dynamicData, "id");
 
   useEffect(() => {
     const fetchData = async () => {
-      // const urlParams = "https://vampay.in/Merchant/pin/ba4gMu";
+      const url = "https://api.vampay.in/Merchent/CommonInvoiceTransaction";
       // const urlParamsString = urlParams.split("/");
+      console.log(url,dynamicData)
       try {
         const response = await fetch(
-          "https://api.vampay.in/Merchent/merchantCreateInvoice",
+          url,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              Origin: "https://vaamoz.com",
             },
             body: JSON.stringify({
-              invoice_id: dynamicData,
+              merchnat_id: dynamicData,
             }),
           }
         );
@@ -75,6 +66,7 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
         }
 
         const data = await response.json();
+        console.log(data, "datartyui======>");
         setInvoiceData(data.data);
         if (data.data.error_message) {
           alert("Incorrect Url");

@@ -11,16 +11,34 @@ import PCIDSS3 from "../assets/PCIDSS3.svg";
 import SECURE3 from "../assets/SECURE3.svg";
 import MAKEININDIA3 from "../assets/MAKEININDIA3.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
+import { useFirstTheme } from "./page";
 
 interface PaymentProps {
   transactionStatus?: string;
 }
 
+interface PaymentData {
+  txn_amount: string;
+  txn_status: string;
+  txn_orderid: string;
+  txn_txnid: string;
+  txn_time: string;
+}
+
 const Payment: React.FC<PaymentProps> = () => {
   const [paymentStatus, setPaymentStatus] = useState(" ");
+  const [paymentData, setPaymentData] = useState<PaymentData>({
+    txn_amount: "",
+    txn_status: "",
+    txn_orderid: "",
+    txn_txnid: "",
+    txn_time: "",
+  });
   const { invoiceData } = useFirstModule();
+  const {invoiceLink} = useFirstTheme();
 
   useEffect(() => {
+    let apiCallCount = 0;
     const fetchTransactionStatus = async () => {
       try {
         const response = await fetch(
@@ -31,7 +49,7 @@ const Payment: React.FC<PaymentProps> = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              invoice_id: invoiceData?.invoiceId,
+              invoice_id: invoiceLink?.invoice_id,
             }),
           }
         );
@@ -41,11 +59,20 @@ const Payment: React.FC<PaymentProps> = () => {
         }
 
         const data = await response.json();
+        // setPaymentStatus(data?.data);
         setPaymentStatus(data?.data);
+        setPaymentData(data?.all_data);
+        console.log(data?.data);
       } catch (error) {
-        setPaymentStatus("FAILURE");
+        console.log(error);
+        if (apiCallCount > 5) {
+          setPaymentStatus("FAILURE");
+        } else {
+          apiCallCount++;
+        }
       }
     };
+
     const intervalId = setInterval(async () => {
       if (paymentStatus === " " || paymentStatus === "PENDING") {
         // console.log("1===", paymentStatus, "========>");
@@ -58,28 +85,27 @@ const Payment: React.FC<PaymentProps> = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [invoiceData?.invoiceId, paymentStatus]);
+  }, [invoiceLink, paymentStatus]);
 
   return (
     <div className="">
       {paymentStatus !== " " ? (
-        <div className="p-8 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-8">
           {paymentStatus === "PENDING" ? (
-            <PaymentStatus />
+             <PaymentStatus paymentData={paymentData} />
           ) : paymentStatus === "SUCCESS" ? (
-            <PaymentSuccess />
+           <PaymentSuccess paymentData={paymentData} />
           ) : paymentStatus === "FAILURE" ? (
-            <PaymentFailed />
-          ) : null}
-
+            <PaymentFailed paymentData={paymentData} />
+          ) :  <PaymentStatus />}
           <Queries />
           <FooterLink />
-          <div className="flex flex-col gap-5  items-center pb-36">
+          <div className="flex flex-col items-center gap-5 pb-36">
             <div>
               <p>your money is always safe</p>
             </div>
 
-            <div className=" w-full flex justify-around items-center">
+            <div className="flex items-center justify-around w-full ">
               <div>
                 <img src={PCIDSS3} width={80} height={38} alt="logo" />
               </div>

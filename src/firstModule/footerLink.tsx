@@ -11,6 +11,7 @@ import UPIlogo from "../assets/UPIlogo.svg";
 import VISA from "../assets/VISA.svg";
 import MASTERCARD from "../assets/MASTERCARD.svg";
 import RUPAY from "../assets/RUPAY.svg";
+import CreateInvoice from "../helper/createInvoice";
 
 export default function FooterLink() {
   return (
@@ -27,7 +28,7 @@ export default function FooterLink() {
             </div>
             <p className="text-[12px] ">
               want to create payment links for your business? visit
-              <span className="uppercase text-[#8875FF]">
+              <span className="uppercase text-[#8875FF]" onClick={CreateInvoice}>
                 {" "}
                 vampay.com/payment-links{" "}
               </span>{" "}

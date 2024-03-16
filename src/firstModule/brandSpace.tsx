@@ -22,7 +22,7 @@
 //             : "bg-[#F1F1F1]"
 //         } rounded-b-3xl `}
 //       >
-//         <div className="flex w-2/3  gap-2 justify-center items-center p-2 ">
+//         <div className="flex items-center justify-center w-2/3 gap-2 p-2 ">
 //           {invoiceData?.merchant_logo ? (
 //             <img
 //               src={invoiceData?.merchant_logo || "/vampayIcon.svg"}
@@ -45,7 +45,7 @@
 //             <Skeleton variant="rounded" width={210} height={40} />
 //           )}
 //         </div>
-//         {/* <div className="w-1/3 flex justify-end items-center pr-4">
+//         {/* <div className="flex items-center justify-end w-1/3 pr-4">
 //           <button onClick={selectLanguage}>
 //             <img
 //               src={"/languagedropdown.svg"}
@@ -92,30 +92,22 @@ const BrandSpace = () => {
             : "bg-[#F1F1F1]"
         } rounded-b-3xl `}
       >
-        <div className="flex w-2/3  gap-2 justify-center items-center p-2 ">
+        <div className="flex items-center justify-center w-2/3 gap-2 p-2 ">
           {invoiceData?.merchant_logo ? (
             <img
               src={invoiceData?.merchant_logo}
-              alt="merchant logo"
-              height={30}
-              width={30}
-              className=""
-            />
-          ) : (
-            <Skeleton variant="rounded" width={40} height={40} />
-          )}
-          {invoiceData?.merchant_name_logo ? (
-            <img
-              src={invoiceData?.merchant_name_logo}
               alt="."
-              height={50}
-              width={120}
+              height={"100%"}
+              width={"100%"}
             />
           ) : (
-            <Skeleton variant="rounded" width={210} height={40} />
+            <div>
+             <Skeleton variant="rounded" width={210} height={40} />
+              <p className="text-center">{invoiceData?.merchnat_name}</p>
+            </div>
           )}
         </div>
-        {/* <div className="w-1/3 flex justify-end items-center pr-4">
+        {/* <div className="flex items-center justify-end w-1/3 pr-4">
           <button onClick={selectLanguage}>
             <img
               src={"/languagedropdown.svg"}

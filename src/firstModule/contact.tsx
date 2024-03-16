@@ -14,11 +14,11 @@ export default function Queries() {
   const { invoiceData } = useFirstModule();
 
   const handleCall = () => {
-    window.open(`tel:${invoiceData?.vendor_number}`, "_self");
+    window.open(`tel:${invoiceData?.merchant_mobile}`, "_self");
   };
 
   const handleEmail = () => {
-    window.open(`mailto:${invoiceData?.vendor_email}`, "_self");
+    window.open(`mailto:${invoiceData?.merchant_email}`, "_self");
   };
 
   return (
@@ -28,9 +28,9 @@ export default function Queries() {
           <div className="flex flex-col gap-2 p-2">
             <p className="text-[12px] ml-2">
               For any queries, Please contact
-              <span className="font-bold"> {invoiceData?.vendor_name}</span>
+              <span className="font-bold"> {invoiceData?.merchnat_name}</span>
             </p>
-            <div className="flex gap-2 flex-wrap ">
+            <div className="flex flex-wrap gap-2 ">
               <div className="flex gap-2" onClick={handleCall}>
                 <img
                   src={Phone_light}
@@ -38,7 +38,7 @@ export default function Queries() {
                   width={20}
                   height={20}
                 />
-                <p>{invoiceData?.vendor_number}</p>
+                <p>{invoiceData?.merchant_mobile}</p>
               </div>
               <div className="flex gap-2 " onClick={handleEmail}>
                 <img
@@ -47,7 +47,7 @@ export default function Queries() {
                   width={20}
                   height={20}
                 />
-                <p>{invoiceData?.vendor_email}</p>
+                <p>{invoiceData?.merchant_email}</p>
               </div>
             </div>
           </div>

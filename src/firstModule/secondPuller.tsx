@@ -10,7 +10,7 @@ import {
   styled,
 } from "@mui/material";
 import { useState } from "react";
-import { usePaymentLink } from "./page";
+import { useFirstTheme, usePaymentLink } from "./page";
 import { grey } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
@@ -23,6 +23,7 @@ const SecondPuller = ({ submitted, setSubmitted }: Props) => {
   const [open, setOpen] = useState(false);
   const { invoiceData } = useFirstModule();
   const { linkData } = usePaymentLink();
+  const {invoiceLink} = useFirstTheme();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -46,12 +47,12 @@ const SecondPuller = ({ submitted, setSubmitted }: Props) => {
     >
       <div className="flex justify-between font-semibold text-[22px] ">
         <p>Amount payable</p>
-        <p className="text-wrap">₹ {invoiceData?.payable_amount}</p>
+        <p className="text-wrap">₹ {invoiceLink?.amount}</p>
       </div>
       <div className="flex justify-start font-semibold text-[14px] text-[#5A5CE7] ">
         <button onClick={handleOpen}>view details</button>
       </div>
-      <div className="flex justify-center items-center my-2">
+      <div className="flex items-center justify-center my-2">
         <button
           className={` ${
             !linkData?.link ? "bg-[#B6B6B6]" : "bg-[#5A5CE7]"
@@ -87,32 +88,32 @@ const SecondPuller = ({ submitted, setSubmitted }: Props) => {
           >
             <Card sx={{ minWidth: 275, borderRadius: 4 }}>
               <CardContent>
-                <div className="flex flex-col justify-around items-start gap-4 p-2">
-                  <p className="text-gray-800 font-poppins text-base font-medium leading-6 ">
-                    Payment request from {invoiceData?.vendor_name}
+                <div className="flex flex-col items-start justify-around gap-4 p-2">
+                  <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
+                    Payment request from {invoiceData?.merchnat_name}
                   </p>
                   <div>
-                    <p className="text-gray-600 font-poppins text-xs font-medium leading-6 uppercase">
+                    <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                       payment for
                     </p>
-                    <p className="text-black font-poppins text-base font-medium leading-6 capitalize">
-                      {invoiceData?.vendor_name}
+                    <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
+                      {invoiceData?.merchnat_name}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-600 font-poppins text-xs font-medium leading-6 uppercase">
+                    <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                       AMOUNT PAYABLE
                     </p>
-                    <p className="text-black font-poppins text-base font-medium leading-6 capitalize">
-                      INR {invoiceData?.payable_amount}
+                    <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
+                      INR {invoiceLink?.amount}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-600 font-poppins text-xs font-medium leading-6 uppercase">
+                    <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                       payment Id
                     </p>
-                    <p className="text-black font-poppins text-base font-medium leading-6 capitalize">
-                      {invoiceData?.transaction_id}
+                    <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
+                      {invoiceLink?.order_id}
                     </p>
                   </div>
                 </div>

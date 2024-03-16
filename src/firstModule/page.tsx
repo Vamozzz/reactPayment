@@ -12,7 +12,13 @@ import SecondTheme from "./secondTheme";
 import ThirdTheme from "./thirdTheme";
 
 type ThemeContextData = {
-  invoiceLink: { link: string; order_id: string } | null;
+  invoiceLink: {
+    link: string;
+    order_id: string;
+    merchant_logo: string;
+    invoice_id: string;
+    amount: string;
+  } | null;
   loading: boolean;
 };
 
@@ -44,6 +50,7 @@ export const FirstThemeProvider = () => {
     link: "",
     app: "",
   });
+  const [payableAmount, setPayableAmount] = React.useState("");
 
   const updatePaymentLink = (newData: { link?: string; app: string }) => {
     setPaymentLink({
@@ -53,20 +60,21 @@ export const FirstThemeProvider = () => {
   };
 
   useEffect(() => {
-    if (invoiceData) {
+    console.log(payableAmount, invoiceData?.merchnat_id, "payableAmount<<<");
+    if (invoiceData && payableAmount) {
       const fetchData = async () => {
         try {
           const response = await fetch(
-            "https://api.vampay.in/Merchent/merchantInitiateInvoiceTransaction",
+            "https://api.vampay.in/Merchent/CommonInvoiceTransaction",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Origin: "https://vaamoz.com",
               },
               body: JSON.stringify({
-                mobileNo: invoiceData.vendor_number,
-                amount: invoiceData.payable_amount,
-                invoiceId: invoiceData.invoiceId,
+                amount: payableAmount,
+                merchnat_id: invoiceData?.merchnat_id,
               }),
             }
           );
@@ -76,9 +84,17 @@ export const FirstThemeProvider = () => {
           }
 
           const data = await response.json();
+          // setThemeData({
+          //   link: data?.data?.link,
+          //   order_id: data?.data?.order_id,
+          //   invoice_id:data?.data?.invoice_id,
+          // });
           setThemeData({
-            link: data.data.link,
-            order_id: data.data.order_id,
+            link: data?.data?.link,
+            order_id: data?.data?.order_id,
+            merchant_logo: data?.data?.merchant_logo,
+            invoice_id: data?.data?.invoice_id,
+            amount: payableAmount,
           });
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -86,7 +102,8 @@ export const FirstThemeProvider = () => {
       };
       fetchData();
     }
-  }, [invoiceData]);
+  }, [invoiceData, payableAmount]);
+  console.log(payableAmount, "wertyuio");
 
   return (
     <FirstThemeContext.Provider
@@ -96,13 +113,25 @@ export const FirstThemeProvider = () => {
         value={{ linkData: paymentLink, loading: false, updatePaymentLink }}
       >
         {invoiceData?.template_id === 1 ? (
-          <FirstTheme />
+          <FirstTheme
+            payableAmount={payableAmount}
+            setPayableAmount={setPayableAmount}
+          />
         ) : invoiceData?.template_id === 2 ? (
-          <SecondTheme />
+          <SecondTheme
+            payableAmount={payableAmount}
+            setPayableAmount={setPayableAmount}
+          />
         ) : invoiceData?.template_id === 3 ? (
-          <ThirdTheme />
+          <ThirdTheme
+            payableAmount={payableAmount}
+            setPayableAmount={setPayableAmount}
+          />
         ) : (
-          <FirstTheme />
+          <FirstTheme
+            payableAmount={payableAmount}
+            setPayableAmount={setPayableAmount}
+          />
         )}
       </PaymentLinkContext.Provider>
     </FirstThemeContext.Provider>

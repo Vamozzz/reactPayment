@@ -17,6 +17,7 @@ import failureTheme3 from "../assets/failureTheme3.svg";
 import PCIDSS3 from "../assets/PCIDSS3.svg";
 import SECURE3 from "../assets/SECURE3.svg";
 import questionIcon from "../assets/questionIcon.svg";
+import { useFirstTheme } from "./page";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -25,9 +26,10 @@ interface PaymentProps {
 const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
   const [paymentStatus, setPaymentStatus] = useState(" ");
   const { invoiceData } = useFirstModule();
+  const { invoiceLink } = useFirstTheme();
 
   const handleCall = () => {
-    window.open(`tel:${invoiceData?.vendor_number}`, "_self");
+    window.open(`tel:${invoiceData?.merchant_mobile}`, "_self");
   };
 
   useEffect(() => {
@@ -41,7 +43,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              invoice_id: invoiceData?.invoiceId,
+              invoice_id: invoiceLink?.invoice_id,
             }),
           }
         );
@@ -58,7 +60,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
     };
 
     const intervalId = setInterval(async () => {
-      if (paymentStatus === " " || paymentStatus === "PENDING") {
+      if (paymentStatus === " " || paymentStatus === "Pending") {
         // console.log("1===", paymentStatus, "========>");
         await fetchTransactionStatus();
       } else if (paymentStatus === "FAILURE" || paymentStatus === "SUCCESS") {
@@ -69,12 +71,12 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [invoiceData?.invoiceId, paymentStatus]);
+  }, [invoiceLink?.invoice_id, paymentStatus]);
 
   return (
     <div>
       {paymentStatus !== " " ? (
-        <div className="p-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-6">
           {paymentStatus === "SUCCESS" && (
             <Card
               sx={{
@@ -83,7 +85,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-2 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-2">
                   <div>
                     <p className="font-medium text-[22px] text-[#2E313A]">
                       Payment Success
@@ -91,7 +93,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div className="flex gap-1">
                     <p className="font-medium text-[22px] text-[#2E313A]">
-                      ₹ {invoiceData?.payable_amount}
+                      ₹ {invoiceLink?.amount}
                     </p>
                     <img
                       src={successTheme3}
@@ -102,13 +104,9 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div>
                     <p className="font-medium text-[12px] text-[#B5B5B5]">
-                      {invoiceData?.payable_amount == "0" || "1"
-                        ? " Rupee"
-                        : " Rupees"}{" "}
-                      {invoiceData?.payable_amount &&
-                        numberToWords(
-                          Math.floor(Number(invoiceData?.payable_amount))
-                        )}
+                      {invoiceLink?.amount == "0" || "1" ? " Rupee" : " Rupees"}{" "}
+                      {invoiceLink?.amount &&
+                        numberToWords(Math.floor(Number(invoiceLink?.amount)))}
                     </p>
                   </div>
                 </div>
@@ -142,7 +140,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
             </Card>
           )}
 
-          {paymentStatus === "PENDING" && (
+          {paymentStatus === "Pending" && (
             <Card
               sx={{
                 minWidth: 275,
@@ -150,7 +148,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-2 justify-center items-center ">
+                <div className="flex flex-col items-center justify-center gap-2 ">
                   <div>
                     <img
                       src={SpinnerTheme3}
@@ -166,18 +164,14 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div className="flex gap-1 ">
                     <p className="font-medium text-[22px] text-black">
-                      ₹ {invoiceData?.payable_amount}
+                      ₹ {invoiceLink?.amount}
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-[12px] text-[#B5B5B5]">
-                      {invoiceData?.payable_amount == "0" || "1"
-                        ? " Rupee"
-                        : " Rupees"}{" "}
-                      {invoiceData?.payable_amount &&
-                        numberToWords(
-                          Math.floor(Number(invoiceData?.payable_amount))
-                        )}
+                      {invoiceLink?.amount == "0" || "1" ? " Rupee" : " Rupees"}{" "}
+                      {invoiceLink?.amount &&
+                        numberToWords(Math.floor(Number(invoiceLink?.amount)))}
                     </p>
                   </div>
                 </div>
@@ -211,7 +205,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
             </Card>
           )}
 
-          {paymentStatus === "FAILURE" && (
+          {paymentStatus === "Failure" && (
             <Card
               sx={{
                 minWidth: 275,
@@ -219,15 +213,15 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
               }}
             >
               <CardContent>
-                <div className="flex flex-col gap-3 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-3">
                   <div>
                     <p className="font-medium text-[22px] text-black">
                       Transaction Failed
                     </p>
                   </div>
-                  <div className="flex gap-1 items-center justify-center">
+                  <div className="flex items-center justify-center gap-1">
                     <p className="font-medium text-[22px] text-black">
-                      ₹ {invoiceData?.payable_amount}
+                      ₹ {invoiceLink?.amount}
                     </p>
                     <img
                       src={failureTheme3}
@@ -238,16 +232,12 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div>
                     <p className="font-medium text-[12px] text-[#B5B5B5]">
-                      {invoiceData?.payable_amount == "0" || "1"
-                        ? " Rupee"
-                        : " Rupees"}{" "}
-                      {invoiceData?.payable_amount &&
-                        numberToWords(
-                          Math.floor(Number(invoiceData?.payable_amount))
-                        )}
+                      {invoiceLink?.amount === "0" || "1" ? " Rupee" : " Rupees"}{" "}
+                      {invoiceLink?.amount &&
+                        numberToWords(Math.floor(Number(invoiceLink?.amount)))}
                     </p>
                   </div>
-                  <div className="bg-white rounded-2xl p-4 flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 p-4 bg-white rounded-2xl">
                     <p className="font-medium text-[14px]">
                       There is a technical issue at your bank. Please try after
                       some time.
@@ -303,12 +293,12 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
           )}
           <Queries />
           <FooterLink />
-          <div className="flex flex-col gap-5  items-center pb-36">
+          <div className="flex flex-col items-center gap-5 pb-36">
             <div>
               <p>your money is always safe</p>
             </div>
 
-            <div className=" w-full flex justify-around items-center">
+            <div className="flex items-center justify-around w-full ">
               <div>
                 <img src={PCIDSS3} width={80} height={38} alt="logo" />
               </div>

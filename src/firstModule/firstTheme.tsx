@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import AmountPayable from "../firstModule/amountPayable";
 import BrandSpace from "../firstModule/brandSpace";
 import SelectPayment from "../firstModule/selectPayment";
@@ -7,12 +7,17 @@ import DetailsPuller from "../firstModule/puller";
 import Queries from "../firstModule/contact";
 import FooterLink from "../firstModule/footerLink";
 import Payment from "../firstModule/payment";
-import Pcidss3 from "../assets/PCIDSS3.svg";
-import secured from "../assets/SECURE3.svg";
-import makeinindia from "../assets/MAKEININDIA3.svg";
-import digitalindia from "../assets/DIGITALINDIA3.svg";
+import Pcidss3 from "../assets/PCIDSSnew.svg";
+import secured from "../assets/SECUREnew.svg";
+import makeinindia from "../assets/MAKEININDIAnewone.svg";
+import digitalindia from "../assets/DIGITALINDIAnew.svg";
 
-const FirstTheme = () => {
+interface module {
+  payableAmount: string;
+  setPayableAmount: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const FirstTheme: FC<module> = ({ payableAmount, setPayableAmount }) => {
   const [isSubmitted, setSubmitted] = useState(false);
 
   return (
@@ -20,7 +25,10 @@ const FirstTheme = () => {
       <BrandSpace />
       {!isSubmitted ? (
         <div className="px-8 ">
-          <AmountPayable />
+          <AmountPayable
+            payableAmount={payableAmount}
+            setPayableAmount={setPayableAmount}
+          />
           <div className="my-4">
             <p>Select payment options</p>
           </div>
@@ -30,29 +38,30 @@ const FirstTheme = () => {
           <div className="my-4">
             <FooterLink />
           </div>
-          <div className="flex flex-col gap-5  items-center pb-36">
+          <div className="flex flex-col items-center gap-5 pb-36 text-[#ABABAB]">
             <div>
               <p>your money is always safe</p>
             </div>
 
-            <div className=" w-full flex justify-around items-center">
+            <div className="flex items-center justify-around w-full ">
               <div>
-                <img src={Pcidss3} width={80} height={38} alt="logo" />
+                <img src={Pcidss3} width={120} height={70} alt="logo" />
               </div>
 
               <div>
-                <img src={secured} width={80} height={38} alt="logo" />
+                <img src={secured} width={120} height={70} alt="logo" />
               </div>
 
               <div>
-                <img src={makeinindia} width={80} height={38} alt="logo" />
+                <img src={makeinindia} width={120} height={70} alt="logo" />
               </div>
               <div>
-                <img src={digitalindia} width={80} height={38} alt="logo" />
+                <img src={digitalindia} width={120} height={70} alt="logo" />
               </div>
             </div>
           </div>
-          <DetailsPuller submitted={isSubmitted} setSubmitted={setSubmitted} />
+          <DetailsPuller submitted={isSubmitted} setSubmitted={setSubmitted}  payableAmount={payableAmount}
+            setPayableAmount={setPayableAmount} />
         </div>
       ) : (
         <Payment

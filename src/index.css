@@ -14,3 +14,16 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.heading{
+  @apply text-[#2E313A] text-[poppins] text-[25px] font-semibold 
+}
+
+.subHeader{
+  @apply text-[#797979] text-[12px] font-medium 
+}
+
+.paymentId{
+  @apply text-[#2E313A] text-[14px] font-medium
+}
