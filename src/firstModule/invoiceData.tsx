@@ -9,9 +9,10 @@ import WaitPage from "./waitPage";
 
 import PCIDSS3 from "../assets/PCIDSS3.svg";
 import SECURE3 from "../assets/SECURE3.svg";
-import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
+import MAKEININDIA3 from "../assets/MAKEININDIA3.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 import { useFirstTheme } from "./page";
+import { useParams } from "react-router";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -25,7 +26,7 @@ interface PaymentData {
   txn_time: string;
 }
 
-const Payment: React.FC<PaymentProps> = () => {
+const InvoiceDataPage: React.FC<PaymentProps> = () => {
   const [paymentStatus, setPaymentStatus] = useState(" ");
   const [paymentData, setPaymentData] = useState<PaymentData>({
     txn_amount: "",
@@ -36,6 +37,8 @@ const Payment: React.FC<PaymentProps> = () => {
   });
   const { invoiceData } = useFirstModule();
   const {invoiceLink} = useFirstTheme();
+  const { dynamicData } = useParams();
+  console.log(dynamicData, "invoice id");
 
   useEffect(() => {
     let apiCallCount = 0;
@@ -49,7 +52,7 @@ const Payment: React.FC<PaymentProps> = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              invoice_id: invoiceLink?.invoice_id,
+              invoice_id: dynamicData,
             }),
           }
         );
@@ -85,7 +88,7 @@ const Payment: React.FC<PaymentProps> = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [invoiceLink, paymentStatus]);
+  }, [dynamicData, paymentStatus]);
 
   return (
     <div className="">
@@ -132,4 +135,4 @@ const Payment: React.FC<PaymentProps> = () => {
   );
 };
 
-export default Payment;
+export default InvoiceDataPage;

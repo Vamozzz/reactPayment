@@ -15,6 +15,9 @@ interface pendingProps {
     txn_orderid?: string;
     txn_txnid?: string;
     txn_time?: string;
+    merchant_name?:string;
+    merchant_email?:string;
+    merchant_mobile?:string;
   };
 }
 
@@ -133,14 +136,14 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             <CardContent>
               <div className="flex flex-col items-start justify-around gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
-                  Payment request from {invoiceData?.merchnat_name}
+                  Payment request from {paymentData?.merchant_name}
                 </p>
                 <div>
                   <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                     payment for
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    {invoiceData?.merchnat_name}
+                    {paymentData?.merchant_name}
                   </p>
                 </div>
                 <div>
@@ -148,7 +151,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
                     AMOUNT PAYABLE
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    {invoiceLink?.amount}
+                    {paymentData?.txn_amount}
                   </p>
                 </div>
                 <div>
@@ -156,7 +159,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
                     payment Id
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    {invoiceLink?.order_id}
+                    {paymentData?.txn_orderid}
                   </p>
                 </div>
               </div>
@@ -204,7 +207,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
-          <div className="w-full my-10 border-t-4 border-dashed "></div>
+          {/* <div className="w-full my-10 border-t-4 border-dashed "></div> */}
           {/* <Card sx={{ minWidth: 275, borderRadius: 4 }} className="w-full">
           <CardContent>
              <div className="flex items-center justify-center gap-4">
@@ -220,12 +223,12 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
            
           </CardContent>
         </Card> */}
-          <Skeleton
+          {/* <Skeleton
             variant="text"
             className="w-full h-20 "
             sx={{ fontSize: "1rem", borderRadius: 3 }}
             animation="wave"
-          />
+          /> */}
         </div>
       </div>
       {/* <div className="">

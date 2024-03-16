@@ -93,6 +93,8 @@ export default function DetailsPuller(props: Props) {
   // const container =
   //   window !== undefined ? () => window().document.body : undefined;
   const container = window !== undefined ? window().document.body : undefined;
+  console.log(payableAmount,"payable amount") 
+
 
   return (
     <Root>
@@ -119,7 +121,7 @@ export default function DetailsPuller(props: Props) {
           onClose={toggleDetails}
           onOpen={toggleDetails}
           swipeAreaWidth={drawerBleedingRef?.current || 110}
-          disableSwipeToOpen={false}
+          disableSwipeToOpen={true}
           ModalProps={{
             keepMounted: linkData?.link ? true : false,
           }}
@@ -127,7 +129,7 @@ export default function DetailsPuller(props: Props) {
           {/* <StyledBox
             sx={{
               position: "absolute",
-              top: -drawerBleedingRef.current ,
+              // top: -drawerBleedingRef.current ,
               borderTopLeftRadius: 8,
               borderTopRightRadius: 8,
               visibility: "visible",
@@ -202,7 +204,7 @@ export default function DetailsPuller(props: Props) {
             <Puller />
             <div className="flex items-center justify-around p-8 ">
               <div className="flex flex-col gap-1">
-                <p className="font-semibold text-[28px]">{` ₹ ${invoiceLink?.amount || 0}`}</p>
+                <p className="font-semibold text-[28px]">{` ₹ ${payableAmount || 0}`}</p>
                 <button
                   className="text-[#5A5CE7] cursor-pointer"
                   onClick={togglePaymentDetails}
@@ -273,8 +275,9 @@ export default function DetailsPuller(props: Props) {
                       <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                         AMOUNT PAYABLE
                       </p>
+                      
                       <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                        INR {invoiceLink?.amount}
+                        INR {payableAmount}
                       </p>
                     </div>
                     <div>

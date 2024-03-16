@@ -9,7 +9,7 @@ import WaitPage from "./waitPage";
 import { Card, CardContent } from "@mui/material";
 import numberToWords from "../utils/numToWord";
 
-import MAKEININDIA3 from "../assets/MAKEININDIA3.svg";
+import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 import successTheme3 from "../assets/successTheme3.svg";
 import SpinnerTheme3 from "../assets/SpinnerTheme3.svg";
@@ -294,7 +294,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
           <Queries />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-36">
-            <div>
+            <div className="text-[#ABABAB]">
               <p>your money is always safe</p>
             </div>
 

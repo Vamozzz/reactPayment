@@ -74,6 +74,7 @@ import React, { useEffect, useState } from "react";
 import BasicListLanguage from "./languageOption";
 import { useFirstModule } from "../provider/invoiceProvider";
 import { Skeleton } from "@mui/material";
+import abLogo from "../assets/vampay.svg";
 
 const BrandSpace = () => {
   const [language, setLanguage] = useState(false);
@@ -93,19 +94,12 @@ const BrandSpace = () => {
         } rounded-b-3xl `}
       >
         <div className="flex items-center justify-center w-2/3 gap-2 p-2 ">
-          {invoiceData?.merchant_logo ? (
-            <img
-              src={invoiceData?.merchant_logo}
-              alt="."
-              height={"100%"}
-              width={"100%"}
-            />
-          ) : (
-            <div>
-             <Skeleton variant="rounded" width={210} height={40} />
-              <p className="text-center">{invoiceData?.merchnat_name}</p>
-            </div>
-          )}
+          <img
+            src={invoiceData?.merchant_logo || abLogo}
+            alt="."
+            height={"100%"}
+            width={"100%"}
+          />
         </div>
         {/* <div className="flex items-center justify-end w-1/3 pr-4">
           <button onClick={selectLanguage}>

@@ -16,7 +16,7 @@ import questionIcon from "../assets/questionIcon.svg";
 
 import pciDssIcon from "../assets/PCIDSS3.svg";
 import secureIcon from "../assets/SECURE3.svg";
-import makeInIndiaIcon from "../assets/MAKEININDIA3.svg";
+import makeInIndiaIcon from "../assets/MAKEININDIAnew12.svg";
 import digitalIndiaIcon from "../assets/DIGITALINDIA3.svg";
 import { useFirstTheme } from "./page";
 
@@ -258,7 +258,7 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
           <Queries />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-36">
-            <div>
+            <div className="text-[#ABABAB]">
               <p>your money is always safe</p>
             </div>
 

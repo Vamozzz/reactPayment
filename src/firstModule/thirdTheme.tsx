@@ -12,7 +12,7 @@ import ThirdPaymentStatus from "./thirdPaymentStatus";
 import languageDropdownIcon from "../assets/languagedropdown.svg";
 import PCIDSS3Icon from "../assets/PCIDSS3.svg";
 import SECURE3Icon from "../assets/SECURE3.svg";
-import MAKEININDIA3Icon from "../assets/MAKEININDIA3.svg";
+import MAKEININDIA3Icon from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3Icon from "../assets/DIGITALINDIA3.svg";
 import AmountPayable from "./amountPayable";
 
@@ -47,7 +47,7 @@ const ThirdTheme: FC<module> = ({ payableAmount, setPayableAmount }) => {
           <Queries />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-48">
-            <div>
+            <div className="text-[#ABABAB]">
               <p>your money is always safe</p>
             </div>
 

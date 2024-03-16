@@ -11,7 +11,7 @@ import SecondPaymentStatus from "./secondPaymentStatus";
 
 import pcid from "../assets/PCIDSS3.svg";
 import secure from "../assets/SECURE3.svg";
-import MAKEININDIA3 from "../assets/MAKEININDIA3.svg";
+import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 import AmountPayable from "./amountPayable";
 
@@ -38,7 +38,7 @@ const SecondTheme: FC<module> = ({ payableAmount, setPayableAmount }) => {
           <Queries />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-1">
-            <div>
+            <div className="text-[#ABABAB]">
               <p>your money is always safe</p>
             </div>
 

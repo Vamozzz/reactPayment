@@ -17,8 +17,17 @@ import {
 import star from "../assets/Star.svg";
 import vampayIcon from "../assets/vampayIcon.svg";
 import tag from "../assets/tag.svg";
+import CustomInput from "../components/customInput";
 
 export default function SelectPayment() {
+  const [couponNumber, setCouponNumber] = React.useState<string>("");
+  const [isApplied, setIsApplied] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string>("");
+
+  const applyCoupon = () => {
+    setIsApplied(!isApplied);
+    setError("");
+  };
   return (
     <div className="">
       <Card sx={{ minWidth: 275, borderRadius: 4 }}>
@@ -31,7 +40,7 @@ export default function SelectPayment() {
         <Divider className="" />
         <CardContent>
           <div className="flex flex-col gap-3">
-            <div className="flex gap-2 justify-between items-start">
+            <div className="flex items-start justify-between gap-2">
               <Radio
                 checked={false}
                 // onChange={handleChange}
@@ -47,7 +56,7 @@ export default function SelectPayment() {
                 }}
               />
               <div className="flex flex-col gap-2 ">
-                <div className="flex justify-start items-start">
+                <div className="flex items-start justify-start">
                   <img
                     src={vampayIcon}
                     alt="logo"
@@ -55,18 +64,18 @@ export default function SelectPayment() {
                     width={30}
                     className="p-1"
                   />
-                  <div className="flex justify-start items-start">
-                    <p className="text-gray-800 font-poppins text-lg font-semibold leading-160">
+                  <div className="flex items-start justify-start">
+                    <p className="text-lg font-semibold text-gray-800 font-poppins leading-160">
                       Pay from any bank account
                     </p>
                   </div>
                 </div>
-                <p className="text-gray-700 font-poppins text-sm font-normal leading-6">
+                <p className="text-sm font-normal leading-6 text-gray-700 font-poppins">
                   add bank to vampay UPI; pay straight from account
                 </p>
               </div>
             </div>
-            <div className="flex justify-around items-center gap-2 rounded-md border border-purple-500 p-2">
+            <div className="flex items-center justify-around gap-2 p-2 border border-purple-500 rounded-md">
               <div>
                 <img src={tag} alt="logo" height={30} width={30} className="" />
               </div>
@@ -74,11 +83,35 @@ export default function SelectPayment() {
               <p className="text-gray-700 text-[12px] font-poppins font-semibold">
                 Upto 100 Cashback through Vampay UPI
               </p>
-              <p className="text-[#5A5CE7] font-poppins text-base font-semibold leading-7">
+              <button
+                onClick={applyCoupon}
+                className="text-[#5A5CE7] font-poppins text-base font-semibold leading-7"
+              >
                 Apply
-              </p>
+              </button>
             </div>
+            {isApplied && (
+              <div className="flex flex-col gap-3">
+                <div className="w-full heading text-wrap ">
+                  <CustomInput
+                    value={couponNumber}
+                    placeholder="Enter Coupon"
+                    onChange={(e) => {
+                      setCouponNumber(e.target.value);
+                    }}
+                    customStyle={{ height: 50 }}
+                  />
+                </div>
+                <button
+                  onClick={() => setError("Invalid Coupon")}
+                  className="bg-[#5A5CE7] shadow-md w-full rounded-[5px] py-2 text-white font-bold"
+                >
+                  Apply
+                </button>
+              </div>
+            )}
           </div>
+          <p className="py-1 text-center text-red-700">{error}</p>
         </CardContent>
       </Card>
     </div>

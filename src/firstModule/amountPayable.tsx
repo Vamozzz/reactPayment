@@ -10,7 +10,7 @@ import CustomInput from "../components/customInput";
 
 interface firstmodule {
   payableAmount: string;
-  setPayableAmount:React.Dispatch<React.SetStateAction<string>>;
+  setPayableAmount: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AmountPayable: React.FC<firstmodule> = ({
@@ -18,8 +18,27 @@ const AmountPayable: React.FC<firstmodule> = ({
   payableAmount,
 }) => {
   const { invoiceData } = useFirstModule();
+  const [error, setError] = React.useState<string>("");
+
+  const Validation = (number: string) => {
+    let isValid = true;
+    const regex = /^[0-9]+$/;
+    if (!regex.test(number)  || number === "") {
+      setError("Kindly enter a valid amount");
+      isValid = false;
+    }
+    console.log(isValid, "isValid");
+
+    return isValid;
+  };
+
   const setPaymentAmount: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setPayableAmount(e.target.value);
+    if (!Validation(e.target.value)) {
+      setPayableAmount("");
+    } else {
+      setPayableAmount(e.target.value);
+      setError("")
+    }
   };
 
   return (
@@ -32,7 +51,7 @@ const AmountPayable: React.FC<firstmodule> = ({
                 Amount payable
               </p>
             </div>
-
+            <p className="text-red-700">{error}</p>
             <div className="w-full heading text-wrap ">
               <CustomInput
                 inputType="number"

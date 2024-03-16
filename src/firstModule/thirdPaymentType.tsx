@@ -45,7 +45,7 @@ export default function ThirdPaymentType() {
   const paymentMethods = [
     {
       icon: phonepayIcon,
-      name: "Phone Pe",
+      name: "PhonePe",
       link: "",
       appName: "phonepe",
     },
@@ -205,7 +205,7 @@ export default function ThirdPaymentType() {
   return (
     <div className="flex flex-col gap-4">
       {paymentType.map((item, index) => (
-        <div key={index} className="bg-white rounded-2xl relative border-2">
+        <div key={index} className="relative bg-white border-2 rounded-2xl">
           <div
             className={`relative overflow-hidden  flex justify-center items-center  w-full h-32  transition-all duration-500 ease-in-out cursor-pointer`}
             onClick={() => {
@@ -240,7 +240,7 @@ export default function ThirdPaymentType() {
             sx={{ display: "flex", flexDirection: "row" }}
           >
             <div
-              className="flex gap-3 justify-between flex-wrap p-4 bg-white rounded-3xl"
+              className="flex flex-wrap justify-between gap-3 p-4 bg-white rounded-3xl"
               // style={{ transition: "height 0.5s ease-in-out" }}
             >
               {paymentMethods.map((item, index) => (
@@ -267,11 +267,11 @@ export default function ThirdPaymentType() {
             unmountOnExit
             sx={{ display: "flex", flexDirection: "row" }}
           >
-            <div className="flex gap-3 flex-wrap p-4 bg-white rounded-3xl">
-              <div className=" w-full flex justify-between items-center border rounded-md p-2">
+            <div className="flex flex-wrap gap-3 p-4 bg-white rounded-3xl">
+              <div className="flex items-center justify-between w-full p-2 border rounded-md ">
                 <input
                   placeholder="Card Number"
-                  className="w-full  bg-transparent outline-none"
+                  className="w-full bg-transparent outline-none"
                 />
                 {/* <img
                 src={"../assets/tag.svg"}
@@ -283,17 +283,17 @@ export default function ThirdPaymentType() {
               </div>
               <input
                 placeholder="Name on card"
-                className="w-full p-2 rounded-md bg-transparent border outline-none"
+                className="w-full p-2 bg-transparent border rounded-md outline-none"
               />
               <div className="flex gap-3">
                 <input
                   placeholder="Valid Thru (MM/YY)"
-                  className="w-2/3 p-2 rounded-md bg-transparent border outline-none"
+                  className="w-2/3 p-2 bg-transparent border rounded-md outline-none"
                 />
-                <div className=" w-1/3 flex justify-between items-center border rounded-md p-2">
+                <div className="flex items-center justify-between w-1/3 p-2 border rounded-md ">
                   <input
                     placeholder="CVV"
-                    className="rounded-md bg-transparent  overflow-x-hidden outline-none"
+                    className="overflow-x-hidden bg-transparent rounded-md outline-none"
                   />
                   <button onClick={handleClick}>
                     <img
@@ -313,11 +313,11 @@ export default function ThirdPaymentType() {
             timeout="auto"
             unmountOnExit
           >
-            <div className="bg-white flex flex-col p-2 rounded-3xl">
+            <div className="flex flex-col p-2 bg-white rounded-3xl">
               {payLaterArray.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between p-4 items-center border-dashed border-b"
+                  className="flex items-center justify-between p-4 border-b border-dashed"
                 >
                   <div className="flex items-center gap-4">
                     <img src={item.icon} alt="." height={40} width={40} />
@@ -352,11 +352,11 @@ export default function ThirdPaymentType() {
             timeout="auto"
             unmountOnExit
           >
-            <div className="bg-white flex flex-col p-2 rounded-3xl">
+            <div className="flex flex-col p-2 bg-white rounded-3xl">
               {netBankingArray.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between p-4 items-center border-dashed border-b"
+                  className="flex items-center justify-between p-4 border-b border-dashed"
                 >
                   <div className="flex items-center gap-4">
                     <img src={item.icon} alt="." height={40} width={40} />
