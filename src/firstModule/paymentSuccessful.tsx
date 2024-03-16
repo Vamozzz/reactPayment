@@ -3,9 +3,9 @@ import { Card, CardContent, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { FC, useRef, useState } from "react";
 import successIconSvg from "../assets/successicon.svg";
-import shareSvg from "../assets/share.svg";
 import { toBlob, toPng } from "html-to-image";
-import downloads from "../assets/downloads.png";
+import shareSvg from "../assets/sharenew12.svg";
+import downloads from "../assets/downloadnew12.svg";
 
 interface successProps {
   paymentData: {
@@ -14,6 +14,9 @@ interface successProps {
     txn_orderid?: string;
     txn_txnid?: string;
     txn_time?: string;
+    merchant_name?: string;
+    merchant_email?: string;
+    merchant_mobile?: string;
   };
 }
 
@@ -167,7 +170,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
           {/* <div className="mt-10">
             <p>Thank you!</p>
           </div> */}
-          <div className="mt-10">
+          <div className="mt-10 text-white">
             <p className="text-center">Your transaction was successful</p>
             {txn_time && <p className="text-center">{txn_time} </p>}
           </div>
@@ -176,14 +179,14 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             <CardContent>
               <div className="flex flex-col items-start justify-around gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
-                  Payment request from {invoiceData?.vendor_name}
+                  Payment request from {paymentData?.merchant_name}
                 </p>
                 <div>
                   <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                     payment for
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    {invoiceData?.vendor_name}
+                    {paymentData?.merchant_name}
                   </p>
                 </div>
                 <div>
@@ -191,7 +194,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
                     AMOUNT PAID
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    INR {invoiceData?.payable_amount}
+                    INR {paymentData?.txn_amount}
                   </p>
                 </div>
                 <div>
@@ -199,7 +202,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
                     payment Id
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    {invoiceData?.order_id}
+                    {paymentData?.txn_orderid}
                   </p>
                 </div>
               </div>
@@ -246,18 +249,19 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
-          <div className="w-full my-10 border-t-4 border-dashed "></div>
+          {/* <div className="w-full my-10 border-t-4 border-dashed "></div> */}
         </div>
       </div>
+      {/* border:2,borderColor:'#5A5CE7', */}
       <div className="">
         <Card
-          sx={{ minWidth: 275, borderRadius: 4 }}
-          className="w-full bg-[rgb(52,168,83)] mt-4"
+          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.5)' }}
+          className="w-full bg-[rgb(52,168,83)] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">
             <button
               onClick={handleShare}
-              className="flex items-center justify-center gap-4"
+              className="flex items-center justify-center gap-4 "
             >
               <img
                 src={shareSvg}
@@ -266,14 +270,14 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
                 width={25}
                 className=""
               />
-              <p className="">Share Reciept</p>
+              <p className="text-white">Share Invoice</p>
             </button>
           </CardContent>
         </Card>
 
         <Card
-          sx={{ minWidth: 275, borderRadius: 4 }}
-          className="w-full bg-[rgb(52,168,83)] mt-4"
+          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.7)' }}
+          className="w-full bg-[rgb(52,168,83)] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">
             <button
@@ -287,7 +291,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
                 width={25}
                 className=""
               />
-              <p className="">Download Reciept</p>
+              <p className="text-white">Download Invoice</p>
             </button>
           </CardContent>
         </Card>

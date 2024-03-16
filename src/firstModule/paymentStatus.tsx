@@ -3,7 +3,8 @@ import { Card, CardContent, Skeleton, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { FC, useRef } from "react";
 import "./loader.css";
-import shareSvg from "../assets/share.svg";
+import shareSvg from "../assets/sharenew12.svg";
+import downloads from "../assets/downloadnew12.svg";
 import { toBlob, toPng } from "html-to-image";
 
 interface pendingProps {
@@ -13,6 +14,9 @@ interface pendingProps {
     txn_orderid?: string;
     txn_txnid?: string;
     txn_time?: string;
+    merchant_name?:string;
+    merchant_email?:string;
+    merchant_mobile?:string;
   };
 }
 
@@ -50,7 +54,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             }),
           ],
           title: "Image",
-          text: "image",
+          text: "Kindly download the invoice",
         };
         try {
           if (navigator && navigator.canShare && !navigator.canShare(data)) {
@@ -104,7 +108,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
         <div className="w-16 h-16 border-t-4 border-b-4 border-purple-500 rounded-full animate-spin"></div>
       </div> */}
         <div className=" bg-[#E99A00] flex flex-col items-center gap-4 border-dashed  p-4 rounded-3xl mt-10 ">
-          <div className="mt-10 text-[26px] ">
+          <div className="mt-10 text-[26px] text-white">
             <p className="text-center">Processing</p>
             {txn_time && <p className="text-center">{txn_time} </p>}
           </div>
@@ -121,14 +125,14 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             <CardContent>
               <div className="flex flex-col items-start justify-around gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
-                  Payment request from {invoiceData?.vendor_name}
+                  Payment request from {paymentData?.merchant_name}
                 </p>
                 <div>
                   <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                     payment for
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    {invoiceData?.vendor_name}
+                    {paymentData?.merchant_name}
                   </p>
                 </div>
                 <div>
@@ -136,7 +140,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
                     AMOUNT
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    INR {invoiceData?.payable_amount}
+                    INR {paymentData?.txn_amount}
                   </p>
                 </div>
                 <div>
@@ -144,7 +148,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
                     payment Id
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
-                    {invoiceData?.order_id}
+                    {paymentData?.txn_orderid}
                   </p>
                 </div>
               </div>
@@ -192,7 +196,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
-          <div className="w-full my-10 border-t-4 border-dashed "></div>
+          {/* <div className="w-full my-10 border-t-4 border-dashed "></div> */}
           {/* <Card sx={{ minWidth: 275, borderRadius: 4 }} className="w-full">
           <CardContent>
              <div className="flex items-center justify-center gap-4">
@@ -208,12 +212,12 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
            
           </CardContent>
         </Card> */}
-          <Skeleton
+          {/* <Skeleton
             variant="text"
             className="w-full h-20 "
             sx={{ fontSize: "1rem", borderRadius: 3 }}
             animation="wave"
-          />
+          /> */}
         </div>
       </div>
       {/* <div className="">

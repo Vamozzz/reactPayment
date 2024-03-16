@@ -11,6 +11,8 @@ import PCIDSS3 from "../assets/PCIDSS3.svg";
 import SECURE3 from "../assets/SECURE3.svg";
 import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
+import { useFirstTheme } from "./page";
+import { useParams } from "react-router";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -24,9 +26,8 @@ interface PaymentData {
   txn_time: string;
 }
 
-const Payment: React.FC<PaymentProps> = () => {
+const InvoiceDataPage: React.FC<PaymentProps> = () => {
   const [paymentStatus, setPaymentStatus] = useState(" ");
-  const { invoiceData } = useFirstModule();
   const [paymentData, setPaymentData] = useState<PaymentData>({
     txn_amount: "",
     txn_status: "",
@@ -34,6 +35,10 @@ const Payment: React.FC<PaymentProps> = () => {
     txn_txnid: "",
     txn_time: "",
   });
+  const { invoiceData } = useFirstModule();
+  const {invoiceLink} = useFirstTheme();
+  const { dynamicData } = useParams();
+  console.log(dynamicData, "invoice id");
 
   useEffect(() => {
     let apiCallCount = 0;
@@ -47,7 +52,7 @@ const Payment: React.FC<PaymentProps> = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              invoice_id: invoiceData?.invoiceId,
+              invoice_id: dynamicData,
             }),
           }
         );
@@ -58,7 +63,7 @@ const Payment: React.FC<PaymentProps> = () => {
 
         const data = await response.json();
         // setPaymentStatus(data?.data);
-        setPaymentStatus("FAILURE");
+        setPaymentStatus(data?.data);
         setPaymentData(data?.all_data);
         console.log(data?.data);
       } catch (error) {
@@ -83,21 +88,19 @@ const Payment: React.FC<PaymentProps> = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [invoiceData?.invoiceId, paymentStatus]);
+  }, [dynamicData, paymentStatus]);
 
   return (
     <div className="">
       {paymentStatus !== " " ? (
         <div className="flex flex-col gap-4 p-8">
           {paymentStatus === "PENDING" ? (
-            <PaymentStatus paymentData={paymentData} />
+             <PaymentStatus paymentData={paymentData} />
           ) : paymentStatus === "SUCCESS" ? (
-            <PaymentSuccess paymentData={paymentData} />
+           <PaymentSuccess paymentData={paymentData} />
           ) : paymentStatus === "FAILURE" ? (
             <PaymentFailed paymentData={paymentData} />
-          ) : (
-            <PaymentStatus paymentData={paymentData} />
-          )}
+          ) :  <PaymentStatus />}
           <Queries />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-36">
@@ -132,4 +135,4 @@ const Payment: React.FC<PaymentProps> = () => {
   );
 };
 
-export default Payment;
+export default InvoiceDataPage;

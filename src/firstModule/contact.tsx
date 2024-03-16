@@ -23,14 +23,14 @@ export default function Queries() {
 
   return (
     <div className="">
-      <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+      <Card sx={{ minWidth: 275, borderRadius: 4 ,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)'}}>
         <CardContent>
           <div className="flex flex-col gap-2 p-2">
             <p className="text-[12px] ml-2">
               For any queries, Please contact
               <span className="font-bold"> {invoiceData?.vendor_name}</span>
             </p>
-            <div className="flex gap-2 flex-wrap ">
+            <div className="flex flex-wrap gap-2 ">
               <div className="flex gap-2" onClick={handleCall}>
                 <img
                   src={Phone_light}

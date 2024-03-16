@@ -9,7 +9,7 @@ import FooterLink from "../firstModule/footerLink";
 import Payment from "../firstModule/payment";
 import Pcidss3 from "../assets/PCIDSSnew.svg";
 import secured from "../assets/SECUREnew.svg";
-import makeinindia from "../assets/MAKEININDIAnewone.svg";
+import makeinindia from "../assets/MAKEININDIAnew12.svg";
 import digitalindia from "../assets/DIGITALINDIAnew.svg";
 
 const FirstTheme = () => {

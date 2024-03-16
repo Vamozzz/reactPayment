@@ -16,7 +16,7 @@ import questionIcon from "../assets/questionIcon.svg";
 
 import pciDssIcon from "../assets/PCIDSS3.svg";
 import secureIcon from "../assets/SECURE3.svg";
-import makeInIndiaIcon from "../assets/MAKEININDIA3.svg";
+import makeInIndiaIcon from "../assets/MAKEININDIAnew12.svg";
 import digitalIndiaIcon from "../assets/DIGITALINDIA3.svg";
 
 interface PaymentProps {

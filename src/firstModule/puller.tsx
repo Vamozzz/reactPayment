@@ -116,7 +116,7 @@ export default function DetailsPuller(props: Props) {
           onClose={toggleDetails}
           onOpen={toggleDetails}
           swipeAreaWidth={drawerBleedingRef?.current || 110}
-          disableSwipeToOpen={false}
+          disableSwipeToOpen={true}
           ModalProps={{
             keepMounted: linkData?.link ? true : false,
           }}

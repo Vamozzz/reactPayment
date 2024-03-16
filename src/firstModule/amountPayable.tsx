@@ -12,7 +12,7 @@ export default function AmountPayable() {
 
   return (
     <div className="">
-      <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+      <Card sx={{ minWidth: 275, borderRadius: 4 ,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
         <CardContent>
           <div className="p-1 ">
             <div className="heading">

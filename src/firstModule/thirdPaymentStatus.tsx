@@ -9,7 +9,7 @@ import WaitPage from "./waitPage";
 import { Card, CardContent } from "@mui/material";
 import numberToWords from "../utils/numToWord";
 
-import MAKEININDIA3 from "../assets/MAKEININDIA3.svg";
+import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 import successTheme3 from "../assets/successTheme3.svg";
 import SpinnerTheme3 from "../assets/SpinnerTheme3.svg";

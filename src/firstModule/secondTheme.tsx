@@ -11,7 +11,7 @@ import SecondPaymentStatus from "./secondPaymentStatus";
 
 import pcid from "../assets/PCIDSS3.svg";
 import secure from "../assets/SECURE3.svg";
-import MAKEININDIA3 from "../assets/MAKEININDIA3.svg";
+import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 
 const SecondTheme = () => {

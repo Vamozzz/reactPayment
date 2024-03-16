@@ -16,10 +16,10 @@ import { useFirstTheme, usePaymentLink } from "./page";
 import CvvInfo from "./cvvInfo";
 
 import upiSvg from "../assets/upi.svg";
-import phonepaySvg from "../assets/phonepay.svg";
-import paytmSvg from "../assets/paytm.svg";
-import bhimlogoSvg from "../assets/bhimlogonew.svg";
-import gpaylogoSvg from "../assets/gpaylogo.svg";
+import phonepaySvg from "../assets/phonepaynew12.svg";
+import paytmSvg from "../assets/Paytmnew12.svg";
+import bhimlogoSvg from "../assets/bhimnew12.svg";
+import gpaylogoSvg from "../assets/gpaynew12.svg";
 import addmoreSvg from "../assets/addmore.svg";
 import cardSvg from "../assets/card.svg";
 import emptywalletSvg from "../assets/emptywallet.svg";
@@ -116,7 +116,7 @@ export default function PaymentType() {
   const paymentMethods = [
     {
       icon: phonepaySvg,
-      name: "Phone Pe",
+      name: "PhonePe",
       link: "",
       appName: "phonepe",
     },
@@ -245,7 +245,7 @@ export default function PaymentType() {
                 }`}
               >
                 <img src={item.icon} alt="." height={40} width={40} />
-                <p className={`text-wrap ${ linkData?.app === item.appName ?  " ":"text-[#ABABAB]"}`}>{item.name}</p>
+                <p className={`text-wrap ${ linkData?.app === item.appName ?  "text-[14px]":"text-[#ABABAB]"}`}>{item.name}</p>
               </button>
             ))}
           </div>

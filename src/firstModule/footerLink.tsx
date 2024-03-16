@@ -7,20 +7,25 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import vampayLogo from "../assets/vampay.svg";
-import UPIlogo from "../assets/UPIlogo.svg";
-import VISA from "../assets/VISA.svg";
-import MASTERCARD from "../assets/MASTERCARD.svg";
-import RUPAY from "../assets/RUPAY.svg";
+import UPIlogo from "../assets/upinew12.svg";
+import VISA from "../assets/visanew12.svg";
+import MASTERCARD from "../assets/masternew12.svg";
+import RUPAY from "../assets/rupaynew12.svg";
+import yesbank from "../assets/yesbanknew12.svg";
+
+
 import CreateInvoice from "../helper/createInvoice";
 
 export default function FooterLink() {
   return (
     <div className="">
-      <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+      <Card sx={{ minWidth: 275, borderRadius: 4 ,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
         <CardContent>
           <div className="flex flex-col gap-2">
             <img src={vampayLogo} alt="." height={50} width={120} />
             <div className="flex gap-2">
+            
+            <img src={yesbank} alt="yes bank logo" height={30} width={40} />
             <img src={UPIlogo} alt="UPI Logo" height={30} width={40} />
               <img src={VISA} alt="VISA Logo" height={30} width={40} />
               <img src={MASTERCARD} alt="MASTERCARD Logo" height={30} width={40} />
