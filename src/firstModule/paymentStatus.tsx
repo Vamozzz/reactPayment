@@ -84,10 +84,10 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
   return (
     <div>
       <div
-        className="relative flex items-start justify-center"
+        className="relative flex items-start justify-center bg-[#F1F1F1]"
         ref={elementRef}
       >
-        <div className=" absolute flex justify-center items-center bg-[#E99A00] p-1 rounded-full border-2 border-[#F1F1F1] mb-10">
+        <div className=" absolute flex justify-center items-center bg-[#E99A00] p-1 rounded-full border-4 border-[#F1F1F1] mb-10">
           {/* <div className="border-t-4 border-b-4 border-purple-500 rounded-full animate-spin h-14 w-14"></div> */}
           <div className="lds-spinner">
             <div></div>
@@ -107,10 +107,10 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
         {/* <div className="absolute bg-[#E99A00] p-2 h-20 w-20 rounded-full border-2 border-[#F1F1F1] mb-10">
         <div className="w-16 h-16 border-t-4 border-b-4 border-purple-500 rounded-full animate-spin"></div>
       </div> */}
-        <div className=" bg-[#E99A00] flex flex-col items-center gap-4 border-dashed  p-4 rounded-3xl mt-10 ">
-          <div className="mt-10 text-[26px] text-white">
-            <p className="text-center">Processing</p>
-            {txn_time && <p className="text-center">{txn_time} </p>}
+        <div className="w-full bg-[#E99A00] flex flex-col  gap-4 border-dashed  p-4 rounded-3xl mt-10 ">
+          <div className="mt-10 text-white">
+            <p className="text-center ">Processing</p>
+            {txn_time && <p className="text-center text-[26px]">{txn_time} </p>}
           </div>
 
           {/* <StyledBox
@@ -121,7 +121,7 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             overflow: "auto",
           }}
         > */}
-          <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+          <Card sx={{ minWidth: 275, borderRadius: 4 ,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)'}}>
             <CardContent>
               <div className="flex flex-col items-start justify-around gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">

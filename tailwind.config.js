@@ -9,7 +9,12 @@ module.exports = {
       xl: "1280px",
       "2xl": "1536px",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        primary: ["Poppins", "sans-serif"],
+        secondary: ["Inter", "sans-serif"],
+      },
+    },
     // plugins: [
     //   require('tailwindcss-gradients'),
     //   require('tailwindcss'),

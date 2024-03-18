@@ -11,6 +11,7 @@ import Pcidss3 from "../assets/PCIDSSnew.svg";
 import secured from "../assets/SECUREnew.svg";
 import makeinindia from "../assets/MAKEININDIAnew12.svg";
 import digitalindia from "../assets/DIGITALINDIAnew.svg";
+import yesbank from  "../assets/yesbanknew12.svg"
 
 const FirstTheme = () => {
   const [isSubmitted, setSubmitted] = useState(false);
@@ -30,12 +31,13 @@ const FirstTheme = () => {
           <div className="my-4">
             <FooterLink />
           </div>
-          <div className="flex flex-col items-center gap-5 pb-36 text-[#ABABAB]">
-            <div>
-              <p>your money is always safe</p>
+          <div className="flex flex-col items-center gap-5 pb-10  text-[#ABABAB]">
+            <div className="flex gap-1 font-medium text-[14px] justify-center items-center">
+              <p>In partnership with </p>
+              <img src={yesbank} alt="UPI Logo" height={40} width={60} />
             </div>
 
-            <div className="flex items-center justify-start w-full ">
+            <div className="flex items-center justify-around w-full ">
               <div>
                 <img src={Pcidss3} width={120} height={70} alt="logo" />
               </div>
@@ -51,6 +53,7 @@ const FirstTheme = () => {
                 <img src={digitalindia} width={120} height={70} alt="logo" />
               </div>
             </div>
+            <p className="font-medium text-[14px]">your money is always safe</p>
           </div>
           <DetailsPuller submitted={isSubmitted} setSubmitted={setSubmitted} />
         </div>

@@ -27,6 +27,7 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
   const { invoiceData } = useFirstModule();
   const elementRef = useRef<HTMLDivElement | null>(null);
   const txn_time = paymentData?.txn_time;
+  const host = window.location.host;
 
   const htmlToImageConvert = () => {
     if (elementRef.current) {
@@ -57,7 +58,8 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
             }),
           ],
           title: "Image",
-          text: " If your browser does not support Sharing, Kindly download the invoice",
+          text: "This is a payment invoice. If your browser does not support sharing, kindly download the invoice from the provided link.",
+          url: `https://${host}/invoice/${invoiceData?.invoiceId}`,
         };
         try {
           if (navigator && navigator.canShare && !navigator.canShare(data)) {
@@ -130,19 +132,25 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
   return (
     <div>
       <div
-        className="relative flex items-start justify-center"
+        className="relative flex items-start justify-center bg-[#F1F1F1]"
         ref={elementRef}
       >
-        <div className=" absolute bg-[#E95400] p-3 rounded-full border-2 border-[#F1F1F1]">
+        <div className=" absolute bg-[#E95400] p-3 rounded-full border-4 w-[80px] h-[80px] flex justify-center items-center border-[#F1F1F1]">
           <img src={crossSvg} alt="logo" height={30} width={30} className="" />
         </div>
-        <div className="flex flex-col items-center gap-4 border-dashed bg-[#E95400] p-4 rounded-3xl mt-10 ">
-          <div className="mt-10 text-white">
-            <p className="text-center">Payment Declined</p>
+        <div className="flex flex-col gap-4 border-dashed bg-[#E95400] p-4 rounded-3xl mt-10 ">
+          <div className="mt-10 text-white ">
+            <p className="text-center text-[26px]">Payment Declined</p>
             {txn_time && <p className="text-center">{txn_time}</p>}
           </div>
 
-          <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+          <Card
+            sx={{
+              minWidth: 275,
+              borderRadius: 4,
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <CardContent>
               <div className="flex flex-col items-start justify-around gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
@@ -238,7 +246,12 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
       </div>
       <div className="">
         <Card
-          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.5)' }}
+          sx={{
+            minWidth: 275,
+            borderRadius: 4,
+            background: "#5A5CE7",
+            boxShadow: "inset 0 0 5px rgba(0, 0, 0, 0.5)",
+          }}
           className="w-full bg-[#E95400] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">
@@ -259,7 +272,12 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
         </Card>
 
         <Card
-          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.7)' }}
+          sx={{
+            minWidth: 275,
+            borderRadius: 4,
+            background: "#5A5CE7",
+            boxShadow: "inset 0 0 5px rgba(0, 0, 0, 0.7)",
+          }}
           className="w-full bg-[rgb(52,168,83)] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">

@@ -37,7 +37,7 @@ export default function FooterLink() {
                 {" "}
                 vampay.com/payment-links{" "}
               </span>{" "}
-              and get started instantly. please report thi payment link if you
+              and get started instantly. please report this payment link if you
               find it to be suspicious report payment link
             </p>
           </div>

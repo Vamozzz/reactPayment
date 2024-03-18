@@ -306,7 +306,7 @@ export default function PaymentType() {
             sx={{ display: "flex", flexDirection: "row" }}
           >
             <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
-              <p>This functionality is currently unavailable for this trader</p>
+              <p className=" text-[#ABABAB] font-medium text-[14px]">This functionality is currently unavailable for this trader</p>
             </div>
           </Collapse>
         )}
@@ -363,7 +363,7 @@ export default function PaymentType() {
         ) : (
           <Collapse in={payLater} timeout="auto" unmountOnExit>
             <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
-              <p>This functionality is currently unavailable for this trader</p>
+              <p className=" text-[#ABABAB] font-medium text-[14px]">This functionality is currently unavailable for this trader</p>
             </div>
           </Collapse>
         )}
@@ -417,7 +417,7 @@ export default function PaymentType() {
         ) : (
           <Collapse in={isNetBanking} timeout="auto" unmountOnExit>
             <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
-              <p>This functionality is currently unavailable for this trader</p>
+              <p className=" text-[#ABABAB] font-medium text-[14px]">This functionality is currently unavailable for this trader</p>
             </div>
           </Collapse>
         )}
