@@ -126,7 +126,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
                 </div>
                 <div>
                   <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
-                    AMOUNT PAYABLE
+                    AMOUNT PAID
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
                     {paymentData?.txn_amount}
