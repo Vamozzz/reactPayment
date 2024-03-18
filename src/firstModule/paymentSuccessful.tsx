@@ -172,8 +172,10 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
           {/* <div className="mt-10">
             <p>Thank you!</p>
           </div> */}
-          <div className="mt-10 text-white text-[26px] leading-8 ">
-            <p className="text-center">Your transaction was successful</p>
+          <div className="mt-10 text-white ">
+            <p className="text-center text-[26px] leading-8 ">
+              Your transaction was successful
+            </p>
             {txn_time && <p className="text-center">{txn_time} </p>}
           </div>
 

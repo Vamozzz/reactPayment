@@ -103,7 +103,7 @@ const InvoiceDataPage: React.FC<PaymentProps> = () => {
           ) : paymentStatus === "FAILURE" ? (
             <PaymentFailed paymentData={paymentData} />
           ) :  <NotFoundPage />}
-          <Queries />
+           <Queries paymentData={paymentData} />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-10  text-[#ABABAB]">
             <div className="flex gap-1 font-medium text-[14px] justify-center items-center">

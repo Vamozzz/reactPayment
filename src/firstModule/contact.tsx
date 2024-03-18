@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -10,15 +10,28 @@ import { useFirstModule } from "../provider/invoiceProvider";
 import Message_light from "../assets/Message_light.svg";
 import Phone_light from "../assets/Phone_light.svg"
 
-export default function Queries() {
+interface contactProps {
+  paymentData?: {
+    txn_amount?: string;
+    txn_status?: string;
+    txn_orderid?: string;
+    txn_txnid?: string;
+    txn_time?: string;
+    merchant_name?: string;
+    merchant_email?: string;
+    merchant_mobile?: string;
+  };
+}
+
+const Queries: FC<contactProps> = ({ paymentData }) => {
   const { invoiceData } = useFirstModule();
 
   const handleCall = () => {
-    window.open(`tel:${invoiceData?.vendor_number}`, "_self");
+    window.open(`tel:${invoiceData?.vendor_number || paymentData?.merchant_mobile}`, "_self");
   };
 
   const handleEmail = () => {
-    window.open(`mailto:${invoiceData?.vendor_email}`, "_self");
+    window.open(`mailto:${invoiceData?.vendor_email || paymentData?.merchant_email}`, "_self");
   };
 
   return (
@@ -28,7 +41,7 @@ export default function Queries() {
           <div className="flex flex-col gap-2 p-2">
             <p className="text-[12px] ml-2">
               For any queries, Please contact
-              <span className="font-bold"> {invoiceData?.vendor_name}</span>
+              <span className="font-bold"> {invoiceData?.vendor_name || paymentData?.merchant_name}</span>
             </p>
             <div className="flex flex-wrap gap-2 ">
               <div className="flex gap-2" onClick={handleCall}>
@@ -38,7 +51,7 @@ export default function Queries() {
                   width={20}
                   height={20}
                 />
-                <p>{invoiceData?.vendor_number}</p>
+                <p>{invoiceData?.vendor_number || paymentData?.merchant_mobile}</p>
               </div>
               <div className="flex gap-2 " onClick={handleEmail}>
                 <img
@@ -47,7 +60,7 @@ export default function Queries() {
                   width={20}
                   height={20}
                 />
-                <p>{invoiceData?.vendor_email}</p>
+                <p>{invoiceData?.vendor_email || paymentData?.merchant_email}</p>
               </div>
             </div>
           </div>
@@ -56,3 +69,4 @@ export default function Queries() {
     </div>
   );
 }
+export default Queries;
