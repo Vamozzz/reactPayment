@@ -7,32 +7,42 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import vampayLogo from "../assets/vampay.svg";
-import UPIlogo from "../assets/UPIlogo.svg";
-import VISA from "../assets/VISA.svg";
-import MASTERCARD from "../assets/MASTERCARD.svg";
-import RUPAY from "../assets/RUPAY.svg";
+import UPIlogo from "../assets/upinew12.svg";
+import VISA from "../assets/visanew12.svg";
+import MASTERCARD from "../assets/masternew12.svg";
+import RUPAY from "../assets/rupaynew12.svg";
 import CreateInvoice from "../helper/createInvoice";
+import yesbank from "../assets/yesbanknew12.svg";
 
 export default function FooterLink() {
   return (
     <div className="">
-      <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+      <Card sx={{ minWidth: 275, borderRadius: 4,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
         <CardContent>
           <div className="flex flex-col gap-2">
             <img src={vampayLogo} alt="." height={50} width={120} />
-            <div className="flex gap-2">
-            <img src={UPIlogo} alt="UPI Logo" height={30} width={40} />
-              <img src={VISA} alt="VISA Logo" height={30} width={40} />
-              <img src={MASTERCARD} alt="MASTERCARD Logo" height={30} width={40} />
-              <img src={RUPAY} alt="RUPAY Logo" height={30} width={40} />
+            <div className="flex gap-3">
+              <img src={yesbank} alt="UPI Logo" height={35} width={50} />
+              <img src={UPIlogo} alt="UPI Logo" height={35} width={50} />
+              <img src={VISA} alt="VISA Logo" height={35} width={50} />
+              <img
+                src={MASTERCARD}
+                alt="MASTERCARD Logo"
+                height={35}
+                width={50}
+              />
+              <img src={RUPAY} alt="RUPAY Logo" height={35} width={50} />
             </div>
             <p className="text-[12px] ">
               want to create payment links for your business? visit
-              <span className="uppercase text-[#8875FF]" onClick={CreateInvoice}>
+              <span
+                className="uppercase text-[#8875FF]"
+                onClick={CreateInvoice}
+              >
                 {" "}
                 vampay.com/payment-links{" "}
               </span>{" "}
-              and get started instantly. please report thi payment link if you
+              and get started instantly. please report this payment link if you
               find it to be suspicious report payment link
             </p>
           </div>

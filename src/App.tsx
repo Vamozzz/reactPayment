@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route path="/:dynamicData" element={<RouteComponent />} />
         <Route path="/invoice/:dynamicData" element={<InvoiceDataPage />} />
       </Routes>

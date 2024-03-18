@@ -8,7 +8,7 @@ import warningSvg from "../assets/warning.svg";
 import questionIconSvg from "../assets/questionIcon.svg";
 import { useFirstTheme } from "./page";
 import { toBlob, toPng } from "html-to-image";
-import download from "../assets/downloadnew12.svg"
+import download from "../assets/downloadnew12.svg";
 import shareSvg from "../assets/sharenew12.svg";
 
 interface failedProps {
@@ -18,9 +18,9 @@ interface failedProps {
     txn_orderid?: string;
     txn_txnid?: string;
     txn_time?: string;
-    merchant_name?:string;
-    merchant_email?:string;
-    merchant_mobile?:string;
+    merchant_name?: string;
+    merchant_email?: string;
+    merchant_mobile?: string;
   };
 }
 
@@ -29,6 +29,9 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
   const { invoiceLink } = useFirstTheme();
   const elementRef = useRef(null);
   const txn_time = paymentData?.txn_time;
+  const host = window.location.host;
+
+  console.log(host, "ururururrururruru");
 
   const htmlToImageConvert = () => {
     if (elementRef.current) {
@@ -59,7 +62,8 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
             }),
           ],
           title: "Image",
-          text: " If your browser does not support Sharing, Kindly download the invoice",
+          text: "This is a payment invoice. If your browser does not support sharing, kindly download the invoice from the provided link.",
+          url: `https://${host}/invoice/${invoiceLink?.invoice_id}`,
         };
         try {
           if (navigator && navigator.canShare && !navigator.canShare(data)) {
@@ -100,20 +104,20 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
         className="relative flex items-start justify-center"
         ref={elementRef}
       >
-        <div className=" absolute bg-[#E95400] p-3 rounded-full border-2 border-[#F1F1F1]">
+        <div className=" absolute bg-[#E95400] p-3 h-[80px] w-[80px] flex justify-center items-center rounded-full border-4 border-[#F1F1F1]">
           <img src={crossSvg} alt="logo" height={30} width={30} className="" />
         </div>
-        <div className="flex flex-col items-center gap-4 border-dashed bg-[#E95400] p-4 rounded-3xl mt-10 ">
+        <div className="flex flex-col gap-4 border-dashed bg-[#E95400] p-4 rounded-3xl mt-10 ">
           <div className="mt-10">
-          <div className="mt-10">
-            <p className="text-center">Payment Declined</p>
+            <p className="text-center text-white text-[26px] ">
+              Payment Declined
+            </p>
             {txn_time && <p className="text-center">{txn_time}</p>}
-          </div>
           </div>
 
           <Card sx={{ minWidth: 275, borderRadius: 4 }}>
             <CardContent>
-              <div className="flex flex-col items-start justify-around gap-4 p-2">
+              <div className="flex flex-col items-start justify-around w-full gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
                   Payment request from {paymentData?.merchant_name}
                 </p>
@@ -127,7 +131,7 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
                 </div>
                 <div>
                   <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
-                    AMOUNT 
+                    AMOUNT
                   </p>
                   <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
                     {paymentData?.txn_amount}
@@ -164,7 +168,13 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
-          <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+          <Card
+            sx={{
+              minWidth: 275,
+              borderRadius: 4,
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <CardContent>
               <div className="flex flex-col items-center justify-center gap-2">
                 <img
@@ -207,7 +217,12 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
       </div>
       <div className="">
         <Card
-          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.5)' }}
+          sx={{
+            minWidth: 275,
+            borderRadius: 4,
+            background: "#5A5CE7",
+            boxShadow: "inset 0 0 5px rgba(0, 0, 0, 0.5)",
+          }}
           className="w-full bg-[rgb(52,168,83)] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">
@@ -228,7 +243,12 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
         </Card>
 
         <Card
-          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.7)' }}
+          sx={{
+            minWidth: 275,
+            borderRadius: 4,
+            background: "#5A5CE7",
+            boxShadow: "inset 0 0 5px rgba(0, 0, 0, 0.7)",
+          }}
           className="w-full bg-[#E95400] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">

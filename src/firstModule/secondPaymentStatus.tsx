@@ -33,45 +33,45 @@ const SecondPaymentStatus: React.FC<PaymentProps> = () => {
     window.open(`tel:${invoiceData?.merchant_mobile}`, "_self");
   };
 
-  useEffect(() => {
-    const fetchTransactionStatus = async () => {
-      try {
-        const response = await fetch(
-          "https://api.vampay.in/Merchent/InvoiceTransactionWebhook",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              invoice_id: invoiceLink?.invoice_id,
-            }),
-          }
-        );
+  // useEffect(() => {
+  //   const fetchTransactionStatus = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://api.vampay.in/Merchent/InvoiceTransactionWebhook",
+  //         {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             invoice_id: invoiceLink?.invoice_id,
+  //           }),
+  //         }
+  //       );
 
-        if (!response.ok) {
-          throw new Error("API request failed");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("API request failed");
+  //       }
 
-        const data = await response.json();
-        setPaymentStatus(data?.data);
-      } catch (error) {
-        setPaymentStatus("FAILURE");
-      }
-    };
-    const intervalId = setInterval(async () => {
-      if (paymentStatus === " " || paymentStatus === "Pending") {
-        // console.log("1===", paymentStatus, "========>");
-        await fetchTransactionStatus();
-      } else if (paymentStatus === "FAILURE" || paymentStatus === "SUCCESS") {
-        // console.log("2===", paymentStatus, "========>");
-        clearInterval(intervalId);
-      }
-    }, 3000);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [invoiceLink?.invoice_id, paymentStatus]);
+  //       const data = await response.json();
+  //       setPaymentStatus(data?.data);
+  //     } catch (error) {
+  //       setPaymentStatus("FAILURE");
+  //     }
+  //   };
+  //   const intervalId = setInterval(async () => {
+  //     if (paymentStatus === " " || paymentStatus === "Pending") {
+  //       // console.log("1===", paymentStatus, "========>");
+  //       await fetchTransactionStatus();
+  //     } else if (paymentStatus === "FAILURE" || paymentStatus === "SUCCESS") {
+  //       // console.log("2===", paymentStatus, "========>");
+  //       clearInterval(intervalId);
+  //     }
+  //   }, 3000);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [invoiceLink?.invoice_id, paymentStatus]);
 
   return (
     <div>

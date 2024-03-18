@@ -87,7 +87,7 @@ const BrandSpace = () => {
   return (
     <div className="sticky top-0 z-10">
       <div
-        className={`flex justify-center items-center py-6 ${
+        className={`flex justify-center items-center pt-2 ${
           invoiceData?.bg_color
             ? `bg-[${invoiceData?.bg_color}]`
             : "bg-[#F1F1F1]"

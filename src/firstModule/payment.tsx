@@ -12,6 +12,7 @@ import SECURE3 from "../assets/SECURE3.svg";
 import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 import { useFirstTheme } from "./page";
+import yesbank from "../assets/yesbanknew12.svg";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -35,7 +36,7 @@ const Payment: React.FC<PaymentProps> = () => {
     txn_time: "",
   });
   const { invoiceData } = useFirstModule();
-  const {invoiceLink} = useFirstTheme();
+  const { invoiceLink } = useFirstTheme();
 
   useEffect(() => {
     let apiCallCount = 0;
@@ -62,7 +63,7 @@ const Payment: React.FC<PaymentProps> = () => {
         // setPaymentStatus(data?.data);
         setPaymentStatus(data?.data);
         setPaymentData(data?.all_data);
-        console.log(data?.data);
+        // console.log(data?.data);
       } catch (error) {
         console.log(error);
         if (apiCallCount > 5) {
@@ -90,19 +91,22 @@ const Payment: React.FC<PaymentProps> = () => {
   return (
     <div className="">
       {paymentStatus !== " " ? (
-        <div className="flex flex-col gap-4 p-8">
+        <div className="flex flex-col gap-4 px-8 py-2">
           {paymentStatus === "PENDING" ? (
-             <PaymentStatus paymentData={paymentData} />
+            <PaymentStatus paymentData={paymentData} />
           ) : paymentStatus === "SUCCESS" ? (
-           <PaymentSuccess paymentData={paymentData} />
+            <PaymentSuccess paymentData={paymentData} />
           ) : paymentStatus === "FAILURE" ? (
             <PaymentFailed paymentData={paymentData} />
-          ) :  <PaymentStatus />}
+          ) : (
+            <PaymentStatus />
+          )}
           <Queries />
           <FooterLink />
-          <div className="flex flex-col items-center gap-5 pb-36">
-            <div className="text-[#ABABAB]">
-              <p>your money is always safe</p>
+          <div className="flex flex-col items-center gap-5 pb-36 text-[#ABABAB]">
+            <div className="flex gap-1 font-medium text-[14px] justify-center items-center">
+              <p>In partnership with </p>
+              <img src={yesbank} alt="UPI Logo" height={40} width={60} />
             </div>
 
             <div className="flex items-center justify-around w-full ">
@@ -121,6 +125,7 @@ const Payment: React.FC<PaymentProps> = () => {
                 <img src={DIGITALINDIA3} width={80} height={38} alt="logo" />
               </div>
             </div>
+            <p className="font-medium text-[14px]">your money is always safe</p>
           </div>
         </div>
       ) : (

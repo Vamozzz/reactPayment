@@ -217,7 +217,7 @@ const SecondPaymentType = () => {
   return (
     <div>
       <div>
-        <div className=" my-2 flex flex-wrap gap-2 ">
+        <div className="flex flex-wrap gap-2 my-2 ">
           {paymentType.map((item, index) => (
             <button
               key={item?.id}
@@ -247,7 +247,7 @@ const SecondPaymentType = () => {
         </div>
       </div>
       {selectedType == "UPI" && (
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2 py-4">
           {UpiType.map((item, index) => (
             <button
               key={item?.id}
@@ -270,11 +270,11 @@ const SecondPaymentType = () => {
         </div>
       )}
       {selectedType == "Credit/Debit" && (
-        <div className="flex gap-3 flex-wrap p-6 bg-white rounded-xl">
-          <div className=" w-full flex justify-between items-center border rounded-md p-2">
+        <div className="flex flex-wrap gap-3 p-6 bg-white rounded-xl">
+          <div className="flex items-center justify-between w-full p-2 border rounded-md ">
             <input
               placeholder="Card Number"
-              className="w-full  bg-transparent outline-none"
+              className="w-full bg-transparent outline-none"
             />
             {/* <img
                 src={"/tag.svg"}
@@ -286,17 +286,17 @@ const SecondPaymentType = () => {
           </div>
           <input
             placeholder="Name on card"
-            className="w-full p-2 rounded-md bg-transparent border outline-none"
+            className="w-full p-2 bg-transparent border rounded-md outline-none"
           />
           <div className="flex gap-3">
             <input
               placeholder="Valid Thru (MM/YY)"
-              className="w-2/3 p-2 rounded-md bg-transparent border outline-none"
+              className="w-2/3 p-2 bg-transparent border rounded-md outline-none"
             />
-            <div className=" w-1/3 flex justify-between items-center border rounded-md p-2">
+            <div className="flex items-center justify-between w-1/3 p-2 border rounded-md ">
               <input
                 placeholder="CVV"
-                className="rounded-md bg-transparent  overflow-x-hidden outline-none"
+                className="overflow-x-hidden bg-transparent rounded-md outline-none"
               />
               <button onClick={handleClick}>
                 <img
@@ -312,11 +312,11 @@ const SecondPaymentType = () => {
         </div>
       )}
       {selectedType == "Pay Later" && (
-        <div className="bg-white rounded-2xl flex flex-col px-2">
+        <div className="flex flex-col px-2 bg-white rounded-2xl">
           {payLaterArray.map((item, index) => (
             <div
               key={index}
-              className="flex justify-between p-4 items-center border-dashed border-b"
+              className="flex items-center justify-between p-4 border-b border-dashed"
             >
               <div className="flex items-center gap-4">
                 <img src={item.icon} alt="." height={40} width={40} />
@@ -347,11 +347,11 @@ const SecondPaymentType = () => {
         </div>
       )}
       {selectedType == "Net Banking" && (
-        <div className="bg-white flex flex-col rounded-2xl px-2">
+        <div className="flex flex-col px-2 bg-white rounded-2xl">
           {netBankingArray.map((item, index) => (
             <div
               key={index}
-              className="flex justify-between p-4 items-center border-dashed border-b"
+              className="flex items-center justify-between p-4 border-b border-dashed"
             >
               <div className="flex items-center gap-4">
                 <img src={item.icon} alt="." height={40} width={40} />

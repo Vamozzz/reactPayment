@@ -43,7 +43,7 @@ const AmountPayable: React.FC<firstmodule> = ({
 
   return (
     <div className="">
-      <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+      <Card sx={{ minWidth: 275, borderRadius: 4 ,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)'}}>
         <CardContent>
           <div className="px-6 py-4">
             <div className="pb-2 font-light heading">

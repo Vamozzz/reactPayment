@@ -5,7 +5,7 @@ import React, { FC, useRef, useState } from "react";
 import successIconSvg from "../assets/successicon.svg";
 import { useFirstTheme } from "./page";
 import { toBlob, toPng } from "html-to-image";
-import download from "../assets/downloadnew12.svg"
+import download from "../assets/downloadnew12.svg";
 import shareSvg from "../assets/sharenew12.svg";
 
 interface successProps {
@@ -27,6 +27,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [dataUrl, setDataUrl] = useState<string>("");
   const txn_time = paymentData?.txn_time;
+  const host = window.location.host;
 
   const htmlToImageConvert = () => {
     if (elementRef.current) {
@@ -57,7 +58,8 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             }),
           ],
           title: "Image",
-          text: " If your browser does not support Sharing, Kindly download the invoice",
+          text: "This is a payment invoice. If your browser does not support sharing, kindly download the invoice from the provided link.",
+          url: `https://${host}/invoice/${invoiceLink?.invoice_id}`,
         };
         try {
           if (navigator && navigator.canShare && !navigator.canShare(data)) {
@@ -95,7 +97,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
         className="relative flex items-start justify-center"
         ref={elementRef}
       >
-        <div className=" absolute bg-[#34A853] p-3 h-16 w-16 rounded-full border-4 border-[#F1F1F1] flex justify-center items-center ">
+        <div className=" absolute bg-[#34A853] p-3 h-[80px] w-[80px] rounded-full border-4 border-[#F1F1F1] flex justify-center items-center ">
           <img
             src={successIconSvg}
             alt="logo"
@@ -104,15 +106,24 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             className=""
           />
         </div>
-        <div className="flex flex-col items-center gap-4 border-dashed bg-[#34A853] p-4 rounded-3xl mt-10 ">
-          <div className="mt-10 text-white">
-            <p className="text-center">Your transaction was successful</p>
+        <div className="w-full flex flex-col  gap-4 border-dashed bg-[#34A853] p-4 rounded-3xl mt-10 ">
+          <div className="mt-10 text-white ">
+            <p className="leading-8 text-center text-[26px]">
+              Your transaction was successful
+            </p>
             {txn_time && <p className="text-center">{txn_time} </p>}
           </div>
 
-          <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+          <Card
+            sx={{
+              minWidth: 275,
+              borderRadius: 4,
+              marginY: 1,
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <CardContent>
-              <div className="flex flex-col items-start justify-around gap-4 p-2">
+              <div className="flex flex-col items-start justify-around w-full gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
                   Payment request from {paymentData?.merchant_name}
                 </p>
@@ -203,7 +214,12 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
       </div>
       <div className="">
         <Card
-          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.5)' }}
+          sx={{
+            minWidth: 275,
+            borderRadius: 4,
+            background: "#5A5CE7",
+            boxShadow: "inset 0 0 5px rgba(0, 0, 0, 0.5)",
+          }}
           className="w-full bg-[rgb(52,168,83)] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">
@@ -224,7 +240,12 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
         </Card>
 
         <Card
-          sx={{ minWidth: 275, borderRadius: 4,background:"#5A5CE7", boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.7)' }}
+          sx={{
+            minWidth: 275,
+            borderRadius: 4,
+            background: "#5A5CE7",
+            boxShadow: "inset 0 0 5px rgba(0, 0, 0, 0.7)",
+          }}
           className="w-full bg-[rgb(52,168,83)] mt-4 hover:bg-[#6149D3]"
         >
           <CardContent className="flex items-center justify-center ">

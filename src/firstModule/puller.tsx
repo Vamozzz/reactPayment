@@ -54,12 +54,13 @@ const Puller = styled("div")(({ theme }) => ({
 }));
 
 export default function DetailsPuller(props: Props) {
-  const { window, submitted, setSubmitted,payableAmount,setPayableAmount } = props;
-  const [open, setOpen] = useState(false);
+  const { window, submitted, setSubmitted, payableAmount, setPayableAmount } =
+    props;
+  const [open, setOpen] = useState(true);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const { invoiceData } = useFirstModule();
   const { linkData } = usePaymentLink();
-  const { invoiceLink} = useFirstTheme()
+  const { invoiceLink } = useFirstTheme();
   const drawerBleedingRef = useRef<number | null>(null);
   // let drawerBleeding = 210;
 
@@ -93,8 +94,7 @@ export default function DetailsPuller(props: Props) {
   // const container =
   //   window !== undefined ? () => window().document.body : undefined;
   const container = window !== undefined ? window().document.body : undefined;
-  console.log(payableAmount,"payable amount") 
-
+  console.log(payableAmount, "payable amount");
 
   return (
     <Root>
@@ -204,7 +204,9 @@ export default function DetailsPuller(props: Props) {
             <Puller />
             <div className="flex items-center justify-around p-8 ">
               <div className="flex flex-col gap-1">
-                <p className="font-semibold text-[28px]">{` ₹ ${payableAmount || 0}`}</p>
+                <p className="font-semibold text-[28px]">{` ₹ ${
+                  payableAmount || 0
+                }`}</p>
                 <button
                   className="text-[#5A5CE7] cursor-pointer"
                   onClick={togglePaymentDetails}
@@ -275,7 +277,7 @@ export default function DetailsPuller(props: Props) {
                       <p className="text-xs font-medium leading-6 text-gray-600 uppercase font-poppins">
                         AMOUNT PAYABLE
                       </p>
-                      
+
                       <p className="text-base font-medium leading-6 text-black capitalize font-poppins">
                         INR {payableAmount}
                       </p>

@@ -14,6 +14,7 @@ import secure from "../assets/SECURE3.svg";
 import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 import AmountPayable from "./amountPayable";
+import yesbank from "../assets/yesbanknew12.svg"
 
 interface module {
   payableAmount: string;
@@ -34,10 +35,10 @@ const SecondTheme: FC<module> = ({ payableAmount, setPayableAmount }) => {
           />
           <p className="font-semibold text-[22px]">Select Payment Options</p>
           <SecondPaymentType />
-          <SelectPayment />
+          {/* <SelectPayment /> */}
           <Queries />
           <FooterLink />
-          <div className="flex flex-col items-center gap-5 pb-1">
+          {/* <div className="flex flex-col items-center gap-5 pb-1">
             <div className="text-[#ABABAB]">
               <p>your money is always safe</p>
             </div>
@@ -58,6 +59,32 @@ const SecondTheme: FC<module> = ({ payableAmount, setPayableAmount }) => {
                 <img src={DIGITALINDIA3} width={80} height={38} alt="logo" />
               </div>
             </div>
+          </div> */}
+          <div className="flex flex-col items-center gap-5  text-[#ABABAB]">
+            <div className="flex gap-1 font-medium text-[14px] justify-center items-center">
+             
+              <p>In partnership with </p>
+              <img src={yesbank} alt="UPI Logo" height={40} width={60} />
+
+            </div>
+
+            <div className="flex items-center justify-around w-full ">
+              <div>
+                <img src={pcid} width={120} height={70} alt="logo" />
+              </div>
+
+              <div>
+                <img src={secure} width={120} height={70} alt="logo" />
+              </div>
+
+              <div>
+                <img src={MAKEININDIA3} width={120} height={70} alt="logo" />
+              </div>
+              <div>
+                <img src={DIGITALINDIA3} width={120} height={70} alt="logo" />
+              </div>
+            </div>
+             <p className="font-medium text-[14px]">your money is always safe</p>
           </div>
         </div>
       ) : (
