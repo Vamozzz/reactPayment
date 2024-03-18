@@ -57,8 +57,7 @@ const Payment: React.FC<PaymentProps> = () => {
         }
 
         const data = await response.json();
-        // setPaymentStatus(data?.data);
-        setPaymentStatus("FAILURE");
+        setPaymentStatus(data?.data);
         setPaymentData(data?.all_data);
         console.log(data?.data);
       } catch (error) {
