@@ -25,7 +25,7 @@ const CustomInput: FC<inputType> = ({
 }) => {
   const [isFocused,setFocused] = useState(false)
   return (
-    <div className={`flex  gap-4 justify-center items-center pl-10 border-2 px-3 overflow-hidden  gap-2 rounded-[5px] w-full ${isFocused ? "bg-[#F1F2F5]" :""} `} onFocus={()=> setFocused(!isFocused)} style={customStyle}>
+    <div className={`flex  gap-4 justify-center items-center pl-10 px-3 overflow-hidden  gap-2 rounded-[5px] w-full ${isFocused ? "" :""} `} onFocus={()=> setFocused(!isFocused)} style={customStyle}>
       <label htmlFor={htmlFor} className="text-[32px] font-light">
         {label}
       </label>
@@ -36,7 +36,7 @@ const CustomInput: FC<inputType> = ({
         id={htmlFor}
         onChange={onChange}
         placeholder={placeholder}
-        className={`${isFocused ? "bg-[#F1F2F5]" :""} outline-none rounded-[5px] max-w-[220px]  ${ 
+        className={`${isFocused ? "" :""} outline-none rounded-[5px] max-w-[220px] border-none ${ 
           error ? " border  border-[#EE4B2B]" : " "
         } `}
         style={customStyle}

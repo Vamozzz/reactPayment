@@ -23,7 +23,7 @@ const AmountPayable: React.FC<firstmodule> = ({
   const Validation = (number: string) => {
     let isValid = true;
     const regex = /^[0-9]+$/;
-    if (!regex.test(number)  || number === "") {
+    if (!regex.test(number) || number === "") {
       setError("Kindly enter a valid amount");
       isValid = false;
     }
@@ -37,21 +37,27 @@ const AmountPayable: React.FC<firstmodule> = ({
       setPayableAmount("");
     } else {
       setPayableAmount(e.target.value);
-      setError("")
+      setError("");
     }
   };
 
   return (
     <div className="">
-      <Card sx={{ minWidth: 275, borderRadius: 4 ,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)'}}>
+      <Card
+        sx={{
+          minWidth: 275,
+          borderRadius: 4,
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        }}
+      >
         <CardContent>
           <div className="px-6 py-4">
-            <div className="pb-2 font-light heading">
+            <div className="pb-2 text-[24px] heading text-center opacity-75 text-black">
               <p style={{ fontWeight: "normal" }} className="text-[24px]">
                 Amount payable
               </p>
             </div>
-            <p className="text-red-700">{error}</p>
+
             <div className="w-full heading text-wrap ">
               <CustomInput
                 inputType="number"
@@ -59,9 +65,12 @@ const AmountPayable: React.FC<firstmodule> = ({
                 value={payableAmount}
                 placeholder="Enter Amount"
                 onChange={setPaymentAmount}
-                customStyle={{ height: 50 }}
+                customStyle={{ height: 50 , fontSize:30}}
               />
             </div>
+
+            <div className="mx-10 border-b border-black opacity-20"></div>
+            <p className="text-red-700 text-center">{error}</p>
           </div>
           {/* <div className="p-1">
             <p className="uppercase subHeader">payment Id</p>

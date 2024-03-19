@@ -116,8 +116,8 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
       </div> */}
         <div className=" bg-[#E99A00] w-full flex flex-col  gap-4 border-dashed  p-4 rounded-3xl mt-10 ">
           <div className="mt-10 ">
-            <div className="mt-4 ">
-              <p className="font-semibold text-center text-white text-[26px]">Processing</p>
+            <div className="mt-4 text-white ">
+              <p className="font-semibold text-center text-[26px]">Processing</p>
               {txn_time && <p className="text-center">{txn_time} </p>}
             </div>
           </div>

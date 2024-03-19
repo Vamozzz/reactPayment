@@ -21,17 +21,17 @@ export default function FooterLink() {
         <CardContent>
           <div className="flex flex-col gap-2">
             <img src={vampayLogo} alt="." height={50} width={120} />
-            <div className="flex gap-3">
-              <img src={yesbank} alt="UPI Logo" height={35} width={50} />
-              <img src={UPIlogo} alt="UPI Logo" height={35} width={50} />
-              <img src={VISA} alt="VISA Logo" height={35} width={50} />
+            <div className="flex gap-2">
+              <img src={yesbank} alt="UPI Logo" height={30} width={40} />
+              <img src={UPIlogo} alt="UPI Logo" height={30} width={40} />
+              <img src={VISA} alt="VISA Logo" height={30} width={40} />
               <img
                 src={MASTERCARD}
                 alt="MASTERCARD Logo"
-                height={35}
-                width={50}
+                height={30}
+                width={40}
               />
-              <img src={RUPAY} alt="RUPAY Logo" height={35} width={50} />
+              <img src={RUPAY} alt="RUPAY Logo" height={30} width={50} />
             </div>
             <p className="text-[12px] ">
               want to create payment links for your business? visit
