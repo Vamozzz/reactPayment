@@ -7,7 +7,7 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 type ContextData = {
   invoiceData: {
@@ -49,8 +49,7 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
   // const urlParamsString = urlParams?.split("/");
   // const invoiceId = urlParamsString?.[urlParamsString.length - 1];
   const { dynamicData } = useParams();
-  console.log(dynamicData,"id");
-  
+  console.log(dynamicData, "id");
 
   useEffect(() => {
     const fetchData = async () => {

@@ -95,7 +95,11 @@ const BrandSpace = () => {
       >
         <div className="flex items-center justify-center w-2/3 gap-2 p-2 ">
           <img
-            src={invoiceData?.merchant_name_logo || abLogo}
+            src={
+              invoiceData?.merchant_logo
+                ? `https://api.vampay.in/${invoiceData?.merchant_logo}`
+                : abLogo
+            }
             alt="."
             height={"100%"}
             width={"100%"}
