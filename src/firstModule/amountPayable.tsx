@@ -51,7 +51,7 @@ const AmountPayable: React.FC<firstmodule> = ({
         }}
       >
         <CardContent>
-          <div className="px-6 py-4">
+          <div className="py-4 ">
             <div className="pb-2 text-[24px] heading text-center opacity-75 text-black">
               <p style={{ fontWeight: "normal" }} className="text-[24px]">
                 Amount payable
@@ -65,12 +65,12 @@ const AmountPayable: React.FC<firstmodule> = ({
                 value={payableAmount}
                 placeholder="Enter Amount"
                 onChange={setPaymentAmount}
-                customStyle={{ height: 50 , fontSize:30}}
+                customStyle={{ height: 50, fontSize: 30 }}
               />
             </div>
 
-            <div className="mx-10 border-b border-black opacity-20"></div>
-            <p className="text-red-700 text-center">{error}</p>
+            <div className="mx-4 border-b border-black opacity-20"></div>
+            <p className="text-center text-red-700">{error}</p>
           </div>
           {/* <div className="p-1">
             <p className="uppercase subHeader">payment Id</p>

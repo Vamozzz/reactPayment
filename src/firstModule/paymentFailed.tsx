@@ -115,7 +115,13 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
             {txn_time && <p className="text-center">{txn_time}</p>}
           </div>
 
-          <Card sx={{ minWidth: 275, borderRadius: 4 }}>
+          <Card
+            sx={{
+              minWidth: 100,
+              borderRadius: 4,
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <CardContent>
               <div className="flex flex-col items-start justify-around w-full gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
@@ -170,7 +176,7 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
         </Card> */}
           <Card
             sx={{
-              minWidth: 275,
+              minWidth: 100,
               borderRadius: 4,
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
             }}
@@ -196,7 +202,14 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
             </CardContent>
           </Card>
           {/* <div className="w-full my-10 border-t-4 border-dashed "></div> */}
-          <Card sx={{ minWidth: 275, borderRadius: 4 }} className="w-full">
+          <Card
+            sx={{
+              minWidth: 100,
+              borderRadius: 4,
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+            className="w-full"
+          >
             <CardContent>
               <div
                 className="flex items-center justify-center gap-4"

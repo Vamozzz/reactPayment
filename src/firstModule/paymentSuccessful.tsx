@@ -7,6 +7,8 @@ import { useFirstTheme } from "./page";
 import { toBlob, toPng } from "html-to-image";
 import download from "../assets/downloadnew12.svg";
 import shareSvg from "../assets/sharenew12.svg";
+import FooterLink from "./footerLink";
+import yesbank from "../assets/yesbanknew12.svg";
 
 interface successProps {
   paymentData: {
@@ -94,7 +96,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
   return (
     <div>
       <div
-        className="relative flex items-start justify-center"
+        className="relative flex items-start justify-center bg-[#F1F1F1]"
         ref={elementRef}
       >
         <div className=" absolute bg-[#34A853] p-3 h-[80px] w-[80px] rounded-full border-4 border-[#F1F1F1] flex justify-center items-center ">
@@ -116,7 +118,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
 
           <Card
             sx={{
-              minWidth: 275,
+              minWidth: 100,
               borderRadius: 4,
               marginY: 1,
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
@@ -195,7 +197,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
-          {/* <div className="w-full my-10 border-t-4 border-dashed "></div> */}
+          <div className="w-full my-2 border-t-4 border-dashed "></div>
           {/* <Card sx={{ minWidth: 275, borderRadius: 4 }} className="w-full">
           <CardContent>
             <div className="flex items-center justify-center gap-4">
@@ -210,6 +212,11 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
+          <FooterLink />
+          <div className="flex gap-1 font-medium text-[14px] justify-center items-center text-white">
+            <p>In partnership with </p>
+            <img src={yesbank} alt="UPI Logo" height={40} width={60} />
+          </div>
         </div>
       </div>
       <div className="">

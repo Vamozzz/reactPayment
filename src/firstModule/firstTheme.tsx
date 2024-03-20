@@ -25,7 +25,7 @@ const FirstTheme: FC<module> = ({ payableAmount, setPayableAmount }) => {
     <div className="relative bg-[#F1F1F1] w-full h-full flex flex-col gap-4 border-2">
       <BrandSpace />
       {!isSubmitted ? (
-        <div className="px-8 ">
+        <div className="px-8">
           <AmountPayable
             payableAmount={payableAmount}
             setPayableAmount={setPayableAmount}

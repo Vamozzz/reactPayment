@@ -45,21 +45,18 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
     const fetchData = async () => {
       const url = "https://api.vampay.in/Merchent/CommonInvoiceTransaction";
       // const urlParamsString = urlParams.split("/");
-      console.log(url,dynamicData)
+      console.log(url, dynamicData);
       try {
-        const response = await fetch(
-          url,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Origin: "https://vaamoz.com",
-            },
-            body: JSON.stringify({
-              merchnat_id: dynamicData,
-            }),
-          }
-        );
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Origin: "https://vaamoz.com",
+          },
+          body: JSON.stringify({
+            merchnat_id: dynamicData,
+          }),
+        });
 
         if (!response.ok) {
           throw new Error("API request failed Error fetching Invoice");
@@ -68,6 +65,7 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
         const data = await response.json();
         console.log(data, "datartyui======>");
         setInvoiceData(data.data);
+        updateMetaTags(data?.data?.merchnat_name);
         if (data.data.error_message) {
           alert("Incorrect Url");
           throw new Error("Incorrect Url");
@@ -83,6 +81,16 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
 
   // console.log("urlParams", urlParams);
   // console.log(loading, "==>loading");
+
+  const updateMetaTags = (description: string) => {
+    document
+      .querySelector('meta[name="Vampay"]')
+      ?.setAttribute(
+        "content",
+        `Quick heads up! Just a reminder to send your payment to ${description}. Here's the link.`
+      );
+    // You can add more meta tags update logic here if needed
+  };
 
   return (
     <FirstModuleContext.Provider value={{ invoiceData, loading }}>
