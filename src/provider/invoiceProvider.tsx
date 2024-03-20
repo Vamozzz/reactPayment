@@ -75,6 +75,7 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
 
         const data = await response.json();
         setInvoiceData(data.data);
+        updateMetaTags(data?.data?.vendor_name);
         if (data.data.error_message) {
           alert("Incorrect Url");
           throw new Error("Incorrect Url");
@@ -90,6 +91,16 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
 
   // console.log("urlParams", urlParams);
   // console.log(loading, "==>loading");
+
+  const updateMetaTags = (description: string) => {
+    document
+      .querySelector('meta[name="Vampay"]')
+      ?.setAttribute(
+        "content",
+        `Quick heads up! Just a reminder to send your payment to ${description}. Here's the link.`
+      );
+    // You can add more meta tags update logic here if needed
+  };
 
   return (
     <FirstModuleContext.Provider value={{ invoiceData, loading }}>

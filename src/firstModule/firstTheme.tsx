@@ -11,7 +11,7 @@ import Pcidss3 from "../assets/PCIDSSnew.svg";
 import secured from "../assets/SECUREnew.svg";
 import makeinindia from "../assets/MAKEININDIAnew12.svg";
 import digitalindia from "../assets/DIGITALINDIAnew.svg";
-import yesbank from  "../assets/yesbanknew12.svg"
+import yesbank from "../assets/yesbanknew12.svg";
 
 const FirstTheme = () => {
   const [isSubmitted, setSubmitted] = useState(false);

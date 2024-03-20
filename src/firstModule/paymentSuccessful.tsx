@@ -6,6 +6,8 @@ import successIconSvg from "../assets/successicon.svg";
 import { toBlob, toPng } from "html-to-image";
 import shareSvg from "../assets/sharenew12.svg";
 import downloads from "../assets/downloadnew12.svg";
+import FooterLink from "./footerLink";
+import yesbank from "../assets/yesbanknew12.svg";
 
 interface successProps {
   paymentData: {
@@ -181,7 +183,7 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
 
           <Card
             sx={{
-              minWidth: 275,
+              minWidth: 100,
               borderRadius: 4,
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
             }}
@@ -259,7 +261,12 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
-          {/* <div className="w-full my-10 border-t-4 border-dashed "></div> */}
+          <div className="w-full my-2 border-t-4 border-dashed "></div>
+          <FooterLink />
+          <div className="flex gap-1 font-medium text-[14px] justify-center items-center text-white">
+            <p>In partnership with </p>
+            <img src={yesbank} alt="UPI Logo" height={40} width={60} />
+          </div>
         </div>
       </div>
       {/* border:2,borderColor:'#5A5CE7', */}

@@ -146,7 +146,7 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
 
           <Card
             sx={{
-              minWidth: 275,
+              minWidth: 100,
               borderRadius: 4,
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
             }}

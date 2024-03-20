@@ -11,7 +11,7 @@ import PCIDSS3 from "../assets/PCIDSS3.svg";
 import SECURE3 from "../assets/SECURE3.svg";
 import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
-import yesbank from "../assets/yesbanknew12.svg"
+import yesbank from "../assets/yesbanknew12.svg";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -98,7 +98,6 @@ const Payment: React.FC<PaymentProps> = () => {
           ) : (
             <PaymentStatus paymentData={paymentData} />
           )}
-           
           <Queries />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-10  text-[#ABABAB]">

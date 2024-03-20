@@ -14,16 +14,16 @@ interface pendingProps {
     txn_orderid?: string;
     txn_txnid?: string;
     txn_time?: string;
-    merchant_name?:string;
-    merchant_email?:string;
-    merchant_mobile?:string;
+    merchant_name?: string;
+    merchant_email?: string;
+    merchant_mobile?: string;
   };
 }
 
 const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
   const { invoiceData } = useFirstModule();
   const elementRef = useRef<HTMLDivElement | null>(null);
-  const  txn_time  = paymentData?.txn_time;
+  const txn_time = paymentData?.txn_time;
 
   const htmlToImageConvert = () => {
     if (elementRef.current) {
@@ -67,7 +67,9 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             await navigator.share(data);
           } else {
             console.error("Sharing not supported");
-            alert("Your browser does not support Sharing , you can download the  image instead.");
+            alert(
+              "Your browser does not support Sharing , you can download the  image instead."
+            );
             htmlToImageConvert();
           }
         } catch (err) {
@@ -121,7 +123,13 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
             overflow: "auto",
           }}
         > */}
-          <Card sx={{ minWidth: 275, borderRadius: 4 ,boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)'}}>
+          <Card
+            sx={{
+              minWidth: 100,
+              borderRadius: 4,
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <CardContent>
               <div className="flex flex-col items-start justify-around gap-4 p-2">
                 <p className="text-base font-medium leading-6 text-gray-800 font-poppins ">
