@@ -58,14 +58,14 @@ export default function DetailsPuller(props: Props) {
     props;
   const [open, setOpen] = useState(true);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
-  const { invoiceData } = useFirstModule();
+  const { invoiceData, urlData } = useFirstModule();
   const { linkData } = usePaymentLink();
   const { invoiceLink } = useFirstTheme();
   const drawerBleedingRef = useRef<number | null>(null);
   // let drawerBleeding = 210;
 
   useEffect(() => {
-    setOpen(linkData?.link ? true : false);
+    setOpen(linkData?.link && invoiceLink?.amount ? true : false);
   }, [linkData]);
 
   useEffect(() => {
@@ -94,7 +94,34 @@ export default function DetailsPuller(props: Props) {
   // const container =
   //   window !== undefined ? () => window().document.body : undefined;
   const container = window !== undefined ? window().document.body : undefined;
-  console.log(payableAmount, "payable amount");
+  console.table(linkData);
+
+  const payViaUPI = async () => {
+    try {
+      const response = await fetch(
+        "https://vaamoz.com/vampayUserAppNew/PaymentLinkInitiateUpiCollect",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Origin: "https:/vaamoz.com",
+          },
+          body: JSON.stringify({
+            link_id: urlData,
+            upi_id: linkData?.upiId,
+            amount: invoiceLink?.amount,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (data?.status) {
+        setSubmitted(true);
+      }
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
 
   return (
     <Root>
@@ -236,7 +263,10 @@ export default function DetailsPuller(props: Props) {
                     //   openWindow?.open(paymentAppLink, "_blank");
                     //   setSubmitted(true);
                     // }
-                    if (linkData?.link) {
+                    if (linkData?.link === "payViaUPI") {
+                      payViaUPI();
+                      setShowPaymentDetails(false);
+                    } else if (linkData?.link) {
                       const paymentAppLink = linkData.link;
                       const newWindow = openWindow?.open(
                         paymentAppLink,

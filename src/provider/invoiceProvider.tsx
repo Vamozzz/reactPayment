@@ -19,13 +19,16 @@ type ContextData = {
     template_id: string | number;
     merchant_email: string;
     merchant_mobile: string;
+    vpa_collection: boolean;
   } | null;
   loading: boolean;
+  urlData: string;
 };
 
 export const FirstModuleContext = createContext<ContextData>({
   invoiceData: null,
   loading: true,
+  urlData: "",
 });
 
 type FirstModuleProviderProps = {
@@ -38,6 +41,7 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
   const [invoiceData, setInvoiceData] =
     useState<ContextData["invoiceData"]>(null);
   const [loading, setLoading] = useState(true);
+  const [urlData, setUrlData] = useState("");
   const { dynamicData } = useParams();
   console.log(dynamicData, "id");
 
@@ -77,6 +81,8 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
       }
     };
     fetchData();
+
+    dynamicData && setUrlData(dynamicData);
   }, [dynamicData]);
 
   // console.log("urlParams", urlParams);
@@ -93,7 +99,7 @@ export const FirstModuleProvider: React.FC<FirstModuleProviderProps> = ({
   };
 
   return (
-    <FirstModuleContext.Provider value={{ invoiceData, loading }}>
+    <FirstModuleContext.Provider value={{ invoiceData, loading, urlData }}>
       {loading && <SkeletonColor />}
       {!loading && children}
       {/* {error && <div>{error}</div>} */}

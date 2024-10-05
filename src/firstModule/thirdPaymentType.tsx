@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useFirstTheme, usePaymentLink } from "./page";
-import { Collapse, Radio } from "@mui/material";
+import { Button, Collapse, Radio } from "@mui/material";
 import CvvInfo from "./cvvInfo";
 
 import phonepayIcon from "../assets/phonepay.svg";
@@ -27,12 +27,62 @@ import sbibankIcon from "../assets/sbibank.svg";
 
 import crossArrowIcon from "../assets/crossArrow.svg";
 import informationIcon from "../assets/information.svg";
+import { useFirstModule } from "../provider/invoiceProvider";
+
+import successupi from "../assets/upisuccess.svg";
+import failedupi from "../assets/upifailed.svg";
 
 export default function ThirdPaymentType() {
   const [isExpanded, setIsExpanded] = useState(" ");
   const { invoiceLink } = useFirstTheme();
   const { linkData, updatePaymentLink } = usePaymentLink();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const { invoiceData } = useFirstModule();
+  const [upiId, setUpiId] = React.useState("");
+  const [isVerified, setVerified] = React.useState<boolean | undefined>(
+    undefined
+  );
+
+  const [upiMessage, setUpiMessage] = React.useState({
+    error: "",
+    success: "",
+    userName: "",
+  });
+
+  // const [showCvvInfo, setCvvInfo] = React.useState(false);
+  const handleUpiId = (e: any) => {
+    setUpiId(e.target.value);
+  };
+
+  const verifyUpiID = async () => {
+    const response = await fetch(
+      "https://api.vampay.in/Merchent/ValidateVpaId",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ vpa_id: upiId }),
+      }
+    );
+    const data = await response.json();
+    if (data.status) {
+      setVerified(true);
+      console.log(data.message);
+      setUpiMessage({
+        error: "",
+        success: data.message,
+        userName: data?.data?.name,
+      });
+    } else {
+      setUpiMessage({
+        error: data.message,
+        success: "",
+        userName: "",
+      });
+    }
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -67,7 +117,6 @@ export default function ThirdPaymentType() {
       link: "",
       appName: "gpay",
     },
-   
   ];
 
   const paymentType = [
@@ -154,6 +203,7 @@ export default function ThirdPaymentType() {
         updatePaymentLink({
           link: paymentLink,
           app: "gpay",
+          upiId: "",
         });
         break;
       case "phonepe":
@@ -164,6 +214,7 @@ export default function ThirdPaymentType() {
         updatePaymentLink({
           link: paymentLink,
           app: "phonepe",
+          upiId: "",
         });
         break;
       case "paytm":
@@ -174,6 +225,7 @@ export default function ThirdPaymentType() {
         updatePaymentLink({
           link: paymentLink,
           app: "paytm",
+          upiId: "",
         });
         break;
       case "bhim":
@@ -184,6 +236,7 @@ export default function ThirdPaymentType() {
         updatePaymentLink({
           link: paymentLink,
           app: "bhim",
+          upiId: "",
         });
         break;
 
@@ -213,6 +266,7 @@ export default function ThirdPaymentType() {
               updatePaymentLink({
                 link: "",
                 app: "",
+                upiId: "",
               });
             }}
           >
@@ -259,6 +313,56 @@ export default function ThirdPaymentType() {
                   <p className="text-wrap">{item.name}</p>
                 </button>
               ))}
+
+              {invoiceData?.vpa_collection && (
+                <div className="flex flex-col flex-wrap justify-between w-full gap-3 focus:border">
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex items-center justify-between w-full p-2   rounded-md  border-[#E5E5E5] border-2">
+                      <input
+                        placeholder="Enter UPI"
+                        className="w-full bg-transparent outline-none "
+                        value={upiId}
+                        onChange={handleUpiId}
+                      />
+                      {isVerified === true ? (
+                        <img
+                          src={successupi}
+                          alt="upi status"
+                          className="px-2"
+                        />
+                      ) : isVerified === false ? (
+                        <img
+                          src={failedupi}
+                          alt="upi status"
+                          className="px-2"
+                        />
+                      ) : null}
+                    </div>
+                    <Button
+                      style={{
+                        color: "white",
+                        background: "#6769FE",
+                        boxShadow: "none",
+                      }}
+                      size="large"
+                      variant="contained"
+                      className="text-nowrap"
+                      onClick={() => verifyUpiID()}
+                      disabled={isVerified}
+                    >
+                      {isVerified ? "verified" : "Verify"}
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between ">
+                    {upiMessage.error ? (
+                      <p className="text-red-600">{upiMessage.error}</p>
+                    ) : (
+                      <p className="text-green-600">{upiMessage.userName}</p>
+                    )}
+                    <p className="text-green-600">{upiMessage.success}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </Collapse>
           <Collapse

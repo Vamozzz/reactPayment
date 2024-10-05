@@ -13,6 +13,7 @@ import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 import { useFirstTheme } from "./page";
 import yesbank from "../assets/yesbanknew12.svg";
+import { useParams } from "react-router";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -37,6 +38,7 @@ const Payment: React.FC<PaymentProps> = () => {
   });
   const { invoiceData } = useFirstModule();
   const { invoiceLink } = useFirstTheme();
+  const { dynamicData } = useParams();
 
   useEffect(() => {
     let apiCallCount = 0;
@@ -51,6 +53,8 @@ const Payment: React.FC<PaymentProps> = () => {
             },
             body: JSON.stringify({
               invoice_id: invoiceLink?.invoice_id,
+              // invoice_id: dynamicData,
+              // invoice_id: invoiceLink?.order_id,
             }),
           }
         );

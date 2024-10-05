@@ -34,7 +34,10 @@ const FirstTheme: FC<module> = ({ payableAmount, setPayableAmount }) => {
             <p>Select payment options</p>
           </div>
           {/* <SelectPayment /> */}
-          <PaymentType />
+          <PaymentType
+            payableAmount={payableAmount}
+            setPayableAmount={setPayableAmount}
+          />
           <Queries />
           <div className="my-4">
             <FooterLink />

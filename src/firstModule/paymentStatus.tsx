@@ -1,7 +1,7 @@
 import { useFirstModule } from "../provider/invoiceProvider";
 import { Card, CardContent, Skeleton, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React, { FC, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import "./loader.css";
 import { useFirstTheme } from "./page";
 import { toBlob, toPng } from "html-to-image";
@@ -26,67 +26,95 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
   const { invoiceLink } = useFirstTheme();
   const elementRef = useRef<HTMLDivElement | null>(null);
   const txn_time = paymentData?.txn_time;
+  const [isSecond, setSecond] = useState("00");
+  const [isMinute, setMinute] = useState("00");
 
-  const htmlToImageConvert = () => {
-    if (elementRef.current) {
-      toPng(elementRef.current, { cacheBust: false })
-        .then((dataUrl) => {
-          const link = document.createElement("a");
-          link.download = "Vampay_Payment.png";
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      console.error("elementRef.current is null");
-    }
-  };
+  // const htmlToImageConvert = () => {
+  //   if (elementRef.current) {
+  //     toPng(elementRef.current, { cacheBust: false })
+  //       .then((dataUrl) => {
+  //         const link = document.createElement("a");
+  //         link.download = "Vampay_Payment.png";
+  //         link.href = dataUrl;
+  //         link.click();
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     console.error("elementRef.current is null");
+  //   }
+  // };
 
-  const handleShare = async () => {
-    if (elementRef.current) {
-      const newFile = await toBlob(elementRef.current);
-      if (newFile) {
-        // Add a null check here
-        const data = {
-          files: [
-            new File([newFile], "image.png", {
-              type: newFile.type,
-            }),
-          ],
-          title: "Image",
-          text: " If your browser does not support Sharing, Kindly download the invoice",
-        };
-        try {
-          if (navigator && navigator.canShare && !navigator.canShare(data)) {
-            console.error("Can't share");
-            alert(
-              "Your browser does not support Sharing , you can download the image instead."
-            );
-            htmlToImageConvert();
-          } else if (navigator && navigator.share) {
-            await navigator.share(data);
-          } else {
-            console.error("Sharing not supported");
-            alert(
-              "Your browser does not support Sharing , you can download the  image instead."
-            );
-            htmlToImageConvert();
-          }
-        } catch (err) {
-          console.error(err);
-          htmlToImageConvert();
-        }
-      } else {
-        console.error("Failed to convert element to blob");
-        htmlToImageConvert();
+  // const handleShare = async () => {
+  //   if (elementRef.current) {
+  //     const newFile = await toBlob(elementRef.current);
+  //     if (newFile) {
+  //       // Add a null check here
+  //       const data = {
+  //         files: [
+  //           new File([newFile], "image.png", {
+  //             type: newFile.type,
+  //           }),
+  //         ],
+  //         title: "Image",
+  //         text: " If your browser does not support Sharing, Kindly download the invoice",
+  //       };
+  //       try {
+  //         if (navigator && navigator.canShare && !navigator.canShare(data)) {
+  //           console.error("Can't share");
+  //           alert(
+  //             "Your browser does not support Sharing , you can download the image instead."
+  //           );
+  //           htmlToImageConvert();
+  //         } else if (navigator && navigator.share) {
+  //           await navigator.share(data);
+  //         } else {
+  //           console.error("Sharing not supported");
+  //           alert(
+  //             "Your browser does not support Sharing , you can download the  image instead."
+  //           );
+  //           htmlToImageConvert();
+  //         }
+  //       } catch (err) {
+  //         console.error(err);
+  //         htmlToImageConvert();
+  //       }
+  //     } else {
+  //       console.error("Failed to convert element to blob");
+  //       htmlToImageConvert();
+  //     }
+  //   } else {
+  //     console.error("elementRef.current is null");
+  //     htmlToImageConvert();
+  //   }
+  // };
+
+  useEffect(() => {
+    countdownTimer(300);
+  }, []);
+
+  function countdownTimer(durationInSeconds: number) {
+    let seconds = durationInSeconds;
+
+    const countdownInterval = setInterval(() => {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+
+      const displayMinutes = String(minutes).padStart(2, "0");
+      setMinute(displayMinutes);
+      const displaySeconds = String(remainingSeconds).padStart(2, "0");
+      setSecond(displaySeconds);
+      //   console.log(`${displayMinutes}:${displaySeconds}`);
+
+      seconds--;
+
+      if (seconds < 0) {
+        clearInterval(countdownInterval);
+        // console.log("Countdown finished!");
       }
-    } else {
-      console.error("elementRef.current is null");
-      htmlToImageConvert();
-    }
-  };
+    }, 1000);
+  }
 
   return (
     <div>
@@ -116,9 +144,12 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
       </div> */}
         <div className=" bg-[#E99A00] w-full flex flex-col  gap-4 border-dashed  p-4 rounded-3xl mt-10 ">
           <div className="mt-10 ">
-            <div className="mt-4 text-white ">
+            <div className="mt-4 text-center text-white ">
               <p className="font-semibold text-center text-[26px]">
                 Processing
+              </p>
+              <p className="">
+                {isMinute}:{isSecond}
               </p>
               {txn_time && <p className="text-center">{txn_time} </p>}
             </div>

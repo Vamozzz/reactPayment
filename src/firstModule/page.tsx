@@ -31,9 +31,14 @@ type LinkContextData = {
   linkData: {
     link?: string;
     app: string;
+    upiId: string;
   } | null;
   loading: boolean;
-  updatePaymentLink: (newData: { link?: string; app: string }) => void;
+  updatePaymentLink: (newData: {
+    link?: string;
+    app: string;
+    upiId: string;
+  }) => void;
 };
 
 const PaymentLinkContext = createContext<LinkContextData>({
@@ -49,13 +54,19 @@ export const FirstThemeProvider = () => {
   const [paymentLink, setPaymentLink] = useState<LinkContextData["linkData"]>({
     link: "",
     app: "",
+    upiId: "",
   });
   const [payableAmount, setPayableAmount] = React.useState("");
 
-  const updatePaymentLink = (newData: { link?: string; app: string }) => {
+  const updatePaymentLink = (newData: {
+    link?: string;
+    app: string;
+    upiId: string;
+  }) => {
     setPaymentLink({
       link: newData.link || "",
-      app: newData.app,
+      app: newData.app || "",
+      upiId: newData?.upiId || "",
     });
   };
 

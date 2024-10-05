@@ -11,7 +11,7 @@ import PCIDSS3 from "../assets/PCIDSS3.svg";
 import SECURE3 from "../assets/SECURE3.svg";
 import MAKEININDIA3 from "../assets/MAKEININDIA3.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
-import yesbank from "../assets/yesbanknew12.svg"
+import yesbank from "../assets/yesbanknew12.svg";
 import { useFirstTheme } from "./page";
 import { useParams } from "react-router";
 import NotFoundPage from "../components/notfound";
@@ -38,7 +38,7 @@ const InvoiceDataPage: React.FC<PaymentProps> = () => {
     txn_time: "",
   });
   const { invoiceData } = useFirstModule();
-  const {invoiceLink} = useFirstTheme();
+  const { invoiceLink } = useFirstTheme();
   const { dynamicData } = useParams();
   console.log(dynamicData, "invoice id");
 
@@ -54,7 +54,9 @@ const InvoiceDataPage: React.FC<PaymentProps> = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              invoice_id: dynamicData,
+              // invoice_id: dynamicData,
+              invoice_id: invoiceLink?.invoice_id,
+              // invoice_id: invoiceLink?.order_id,
             }),
           }
         );
@@ -97,12 +99,14 @@ const InvoiceDataPage: React.FC<PaymentProps> = () => {
       {paymentStatus !== " " ? (
         <div className="flex flex-col gap-4 p-8">
           {paymentStatus === "PENDING" ? (
-             <PaymentStatus paymentData={paymentData} />
+            <PaymentStatus paymentData={paymentData} />
           ) : paymentStatus === "SUCCESS" ? (
-           <PaymentSuccess paymentData={paymentData} />
+            <PaymentSuccess paymentData={paymentData} />
           ) : paymentStatus === "FAILURE" ? (
             <PaymentFailed paymentData={paymentData} />
-          ) :  <NotFoundPage />}
+          ) : (
+            <NotFoundPage />
+          )}
           <Queries paymentData={paymentData} />
           <FooterLink />
           <div className="flex flex-col items-center gap-5 pb-36 text-[#ABABAB]">

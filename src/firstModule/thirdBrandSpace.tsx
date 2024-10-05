@@ -14,8 +14,8 @@ export default function ThirdBrandSpace() {
         <img
           src={invoiceData?.merchant_logo || icon}
           alt="merchant logo"
-          height={"100%"}
-          width={"100%"}
+          height={100}
+          width={100}
           className="object-none "
         />
       </div>

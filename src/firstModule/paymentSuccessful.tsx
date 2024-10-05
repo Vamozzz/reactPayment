@@ -9,6 +9,12 @@ import download from "../assets/downloadnew12.svg";
 import shareSvg from "../assets/sharenew12.svg";
 import FooterLink from "./footerLink";
 import yesbank from "../assets/yesbanknew12.svg";
+import vampayLogo from "../assets/vampay.svg";
+import UPIlogo from "../assets/upinew12.svg";
+import VISA from "../assets/visanew12.svg";
+import MASTERCARD from "../assets/masternew12.svg";
+import RUPAY from "../assets/rupaynew12.svg";
+import { openVampayWebsite } from "../helper/usefulLinks";
 
 interface successProps {
   paymentData: {
@@ -28,10 +34,12 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
   const { invoiceLink } = useFirstTheme();
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [dataUrl, setDataUrl] = useState<string>("");
+  const [isSharing, setSharing] = useState(false);
   const txn_time = paymentData?.txn_time;
   const host = window.location.host;
 
   const htmlToImageConvert = () => {
+    setSharing(true);
     if (elementRef.current) {
       toPng(elementRef.current, { cacheBust: false })
         .then((dataUrl) => {
@@ -46,9 +54,11 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
     } else {
       console.error("elementRef.current is null");
     }
+    setSharing(false);
   };
 
   const handleShare = async () => {
+    setSharing(true);
     if (elementRef.current) {
       const newFile = await toBlob(elementRef.current);
       if (newFile) {
@@ -91,12 +101,15 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
       console.error("elementRef.current is null");
       htmlToImageConvert();
     }
+    setSharing(false);
   };
 
   return (
     <div>
       <div
-        className="relative flex items-start justify-center bg-[#F1F1F1]"
+        className={`relative flex items-start justify-center bg-[#F1F1F1] ${
+          isSharing ? " p-4 mx-auto" : " "
+        }`}
         ref={elementRef}
       >
         <div className=" absolute bg-[#34A853] p-3 h-[80px] w-[80px] rounded-full border-4 border-[#F1F1F1] flex justify-center items-center ">
@@ -212,7 +225,41 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
             </div>
           </CardContent>
         </Card> */}
-          <FooterLink />
+
+          <div className="">
+            <Card
+              sx={{
+                minWidth: 100,
+                borderRadius: 4,
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <div className="flex flex-col gap-2">
+                  <button onClick={openVampayWebsite}>
+                    <img src={vampayLogo} alt="." height={50} width={120} />
+                  </button>
+                  <div className="flex flex-wrap gap-2">
+                    <img
+                      src={yesbank}
+                      alt="yes bank logo"
+                      height={30}
+                      width={40}
+                    />
+                    <img src={UPIlogo} alt="UPI Logo" height={30} width={40} />
+                    <img src={VISA} alt="VISA Logo" height={30} width={40} />
+                    <img
+                      src={MASTERCARD}
+                      alt="MASTERCARD Logo"
+                      height={30}
+                      width={40}
+                    />
+                    <img src={RUPAY} alt="RUPAY Logo" height={30} width={40} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
           <div className="flex gap-1 font-medium text-[14px] justify-center items-center text-white">
             <p>In partnership with </p>
             <img src={yesbank} alt="UPI Logo" height={40} width={60} />

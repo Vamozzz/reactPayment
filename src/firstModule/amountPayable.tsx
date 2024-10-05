@@ -35,6 +35,8 @@ const AmountPayable: React.FC<firstmodule> = ({
   const setPaymentAmount: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!Validation(e.target.value)) {
       setPayableAmount("");
+
+      // window.location.reload();
     } else {
       setPayableAmount(e.target.value);
       setError("");

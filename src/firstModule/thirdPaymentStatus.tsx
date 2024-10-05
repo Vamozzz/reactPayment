@@ -18,6 +18,7 @@ import PCIDSS3 from "../assets/PCIDSS3.svg";
 import SECURE3 from "../assets/SECURE3.svg";
 import questionIcon from "../assets/questionIcon.svg";
 import { useFirstTheme } from "./page";
+import { useParams } from "react-router";
 
 interface PaymentProps {
   transactionStatus?: string;
@@ -27,6 +28,7 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
   const [paymentStatus, setPaymentStatus] = useState(" ");
   const { invoiceData } = useFirstModule();
   const { invoiceLink } = useFirstTheme();
+  const { dynamicData } = useParams();
 
   const handleCall = () => {
     window.open(`tel:${invoiceData?.merchant_mobile}`, "_self");
@@ -44,6 +46,8 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
             },
             body: JSON.stringify({
               invoice_id: invoiceLink?.invoice_id,
+              // invoice_id: dynamicData,
+              // invoice_id: invoiceLink?.order_id,
             }),
           }
         );
@@ -232,7 +236,9 @@ const ThirdPaymentStatus: React.FC<PaymentProps> = () => {
                   </div>
                   <div>
                     <p className="font-medium text-[12px] text-[#B5B5B5]">
-                      {invoiceLink?.amount === "0" || "1" ? " Rupee" : " Rupees"}{" "}
+                      {invoiceLink?.amount === "0" || "1"
+                        ? " Rupee"
+                        : " Rupees"}{" "}
                       {invoiceLink?.amount &&
                         numberToWords(Math.floor(Number(invoiceLink?.amount)))}
                     </p>
