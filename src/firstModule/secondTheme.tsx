@@ -15,7 +15,7 @@ import MAKEININDIA3 from "../assets/MAKEININDIAnew12.svg";
 import DIGITALINDIA3 from "../assets/DIGITALINDIA3.svg";
 
 const SecondTheme = () => {
-  const [isSubmitted, setSubmitted] = useState(false);
+  const [isSubmitted, setSubmitted] = useState(true);
 
   return (
     <div className="relative bg-[#F1F1F1] w-full border-2">

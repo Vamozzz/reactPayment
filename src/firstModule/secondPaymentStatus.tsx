@@ -31,7 +31,7 @@ interface PaymentData {
 }
 
 const SecondPaymentStatus: React.FC<PaymentProps> = () => {
-  const [paymentStatus, setPaymentStatus] = useState<string>(" ");
+  const [paymentStatus, setPaymentStatus] = useState<string>("SUCCESS");
   const { invoiceData } = useFirstModule();
   const [paymentData, setPaymentData] = useState<PaymentData>({
     txn_amount: "",

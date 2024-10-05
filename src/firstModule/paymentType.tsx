@@ -11,7 +11,7 @@ import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
-import { Radio } from "@mui/material";
+import { Button, Radio } from "@mui/material";
 import { useFirstTheme, usePaymentLink } from "./page";
 import CvvInfo from "./cvvInfo";
 
@@ -37,6 +37,9 @@ import info from "../assets/information.svg";
 import paylaterIcon from "../assets/paylater.svg";
 import LazyPayIcon from "../assets/LazyPay.svg";
 import simplIcon from "../assets/getsimplIcon.svg";
+import CustomInput from "../components/customInput";
+import successupi from "../assets/upisuccess.svg";
+import failedupi from "../assets/upifailed.svg";
 
 export default function PaymentType() {
   const [open, setOpen] = React.useState(true);
@@ -46,11 +49,40 @@ export default function PaymentType() {
   const { invoiceLink } = useFirstTheme();
   const { linkData, updatePaymentLink } = usePaymentLink();
   const [isAvailable, setAvailable] = React.useState(false);
+  const [upiId, setUpiId] = React.useState("");
+  const [isVerified, setVerified] = React.useState<boolean | undefined>(
+    undefined
+  );
+  const [upiMessage, setUpiMessage] = React.useState({
+    error: "",
+    success: "",
+  });
   // const [showCvvInfo, setCvvInfo] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
+
+  // const isValid_UPI_ID = (upi_Id: string) => {
+  //   let isvalid = false;
+  //   let regex = new RegExp(/^[a-zA-Z0-9.-]{2, 256}@[a-zA-Z][a-zA-Z]{2, 64}$/);
+
+  //   if (upi_Id == null) {
+  //     isvalid = false;
+  //   }
+
+  //   if (regex.test(upi_Id) == true) {
+  //     isvalid = true;
+  //   } else {
+  //     isvalid = false;
+  //   }
+  //   console.log(upi_Id, isvalid, regex.test(upi_Id), "upi_Idupi_Id");
+  //   return isvalid;
+  // };
+
+  const handleUpiId = (e: any) => {
+    setUpiId(e.target.value);
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -204,6 +236,40 @@ export default function PaymentType() {
     setNetBanking(!isNetBanking);
   };
 
+  const verifyUpiID = async () => {
+    // if (isValid_UPI_ID(upiId)) {
+    const response = await fetch(
+      "https://api.vampay.in/Merchent/ValidateVpaId",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ vpa_id: upiId }),
+      }
+    );
+    const data = await response.json();
+    if (data.status) {
+      setVerified(true);
+      console.log(data.message);
+      setUpiMessage({
+        error: "",
+        success: data.message,
+      });
+    } else {
+      setUpiMessage({
+        error: data.message,
+        success: "",
+      });
+    }
+    // } else {
+    //   setUpiMessage({
+    //     error: "Invalid UPI",
+    //     success: "",
+    //   });
+    // }
+  };
+
   return (
     <div className="my-4 shadow-lg rounded-xl">
       <List
@@ -245,9 +311,54 @@ export default function PaymentType() {
                 }`}
               >
                 <img src={item.icon} alt="." height={40} width={40} />
-                <p className={`text-wrap ${ linkData?.app === item.appName ?  "text-[14px]":"text-[#ABABAB]"}`}>{item.name}</p>
+                <p
+                  className={`text-wrap ${
+                    linkData?.app === item.appName
+                      ? "text-[14px]"
+                      : "text-[#ABABAB]"
+                  }`}
+                >
+                  {item.name}
+                </p>
               </button>
             ))}
+            {/* <div className="w-full">
+              <label className="text-[#ABABAB]">Upi Id</label>
+              <input className="w-full" />
+              <button>Verify</button>
+            </div> */}
+            <div className="flex items-center justify-between w-full gap-3">
+              <div className="flex items-center justify-between w-full p-2 border rounded-md ">
+                <input
+                  placeholder="Enter UPI"
+                  className="w-full bg-transparent outline-none"
+                  value={upiId}
+                  onChange={handleUpiId}
+                />
+                {isVerified === true ? (
+                  <img src={successupi} alt="upi status" />
+                ) : isVerified === false ? (
+                  <img src={failedupi} alt="upi status" />
+                ) : null}
+              </div>
+              <Button
+                style={{
+                  color: "white",
+                  background: "#6769FE",
+                  boxShadow: "none",
+                }}
+                size="large"
+                variant="contained"
+                className="text-nowrap"
+                onClick={() => verifyUpiID()}
+                disabled={isVerified}
+              >
+                {isVerified ? "verified" : "Verify"}
+              </Button>
+            </div>
+
+            <p className="text-red-600">{upiMessage.error}</p>
+            <p className="text-green-600">{upiMessage.success}</p>
           </div>
         </Collapse>
         <ListItemButton onClick={handleCard}>
@@ -306,7 +417,9 @@ export default function PaymentType() {
             sx={{ display: "flex", flexDirection: "row" }}
           >
             <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
-              <p className=" text-[#ABABAB] font-medium text-[14px]">This functionality is currently unavailable for this trader</p>
+              <p className=" text-[#ABABAB] font-medium text-[14px]">
+                This functionality is currently unavailable for this trader
+              </p>
             </div>
           </Collapse>
         )}
@@ -363,7 +476,9 @@ export default function PaymentType() {
         ) : (
           <Collapse in={payLater} timeout="auto" unmountOnExit>
             <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
-              <p className=" text-[#ABABAB] font-medium text-[14px]">This functionality is currently unavailable for this trader</p>
+              <p className=" text-[#ABABAB] font-medium text-[14px]">
+                This functionality is currently unavailable for this trader
+              </p>
             </div>
           </Collapse>
         )}
@@ -417,7 +532,9 @@ export default function PaymentType() {
         ) : (
           <Collapse in={isNetBanking} timeout="auto" unmountOnExit>
             <div className="flex gap-3 flex-wrap p-4 text-center bg-[#F5F5F5]">
-              <p className=" text-[#ABABAB] font-medium text-[14px]">This functionality is currently unavailable for this trader</p>
+              <p className=" text-[#ABABAB] font-medium text-[14px]">
+                This functionality is currently unavailable for this trader
+              </p>
             </div>
           </Collapse>
         )}

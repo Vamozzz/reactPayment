@@ -1,7 +1,7 @@
 import { useFirstModule } from "../provider/invoiceProvider";
 import { Card, CardContent, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React, { FC, useRef } from "react";
+import React, { FC, useRef, useState } from "react";
 
 import crossSvg from "../assets/cross.svg";
 import warningSvg from "../assets/warning.svg";
@@ -28,8 +28,10 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const txn_time = paymentData?.txn_time;
   const host = window.location.host;
+  const [isSharing, setSharing] = useState(false);
 
   const htmlToImageConvert = () => {
+    setSharing(true);
     if (elementRef.current) {
       toPng(elementRef.current, { cacheBust: false })
         .then((dataUrl) => {
@@ -44,9 +46,11 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
     } else {
       console.error("elementRef.current is null");
     }
+    setSharing(false);
   };
 
   const handleShare = async () => {
+    setSharing(true);
     if (elementRef.current) {
       const newFile = await toBlob(elementRef.current);
       if (newFile) {
@@ -89,6 +93,7 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
       console.error("elementRef.current is null");
       htmlToImageConvert();
     }
+    setSharing(false);
   };
 
   // const handleShare = async () => {
@@ -132,7 +137,9 @@ const PaymentFailed: FC<failedProps> = ({ paymentData }) => {
   return (
     <div>
       <div
-        className="relative flex items-start justify-center bg-[#F1F1F1]"
+        className={`relative flex items-start justify-center bg-[#F1F1F1] ${
+          isSharing ? " p-4 mx-auto" : " "
+        }`}
         ref={elementRef}
       >
         <div className=" absolute bg-[#E95400] p-3 rounded-full border-4 w-[80px] h-[80px] flex justify-center items-center border-[#F1F1F1]">

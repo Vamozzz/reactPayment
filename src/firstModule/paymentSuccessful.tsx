@@ -8,6 +8,12 @@ import shareSvg from "../assets/sharenew12.svg";
 import downloads from "../assets/downloadnew12.svg";
 import FooterLink from "./footerLink";
 import yesbank from "../assets/yesbanknew12.svg";
+import vampayLogo from "../assets/vampay.svg";
+import UPIlogo from "../assets/upinew12.svg";
+import VISA from "../assets/visanew12.svg";
+import MASTERCARD from "../assets/masternew12.svg";
+import RUPAY from "../assets/rupaynew12.svg";
+import { openVampayWebsite } from "../helper/usefulLinks";
 
 interface successProps {
   paymentData: {
@@ -28,13 +34,15 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
   const [dataUrl, setDataUrl] = useState<string>("");
   const txn_time = paymentData?.txn_time;
   const host = window.location.host;
+  const [isSharing, setSharing] = useState(false);
 
   const htmlToImageConvert = () => {
+    setSharing(true);
     if (elementRef.current) {
       toPng(elementRef.current, { cacheBust: false })
         .then((dataUrl) => {
           const link = document.createElement("a");
-          link.download = "Vampay_Payment.png";
+          link.download = `${paymentData.txn_orderid}-invoice.png`;
           link.href = dataUrl;
           link.click();
         })
@@ -44,73 +52,11 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
     } else {
       console.error("elementRef.current is null");
     }
+    setSharing(false);
   };
 
-  // const shareImage = () => {
-  //   if (dataUrl) {
-  //     fetch(dataUrl)
-  //       .then((res) => res.blob())
-  //       .then((blob) => {
-  //         const file = new File([blob], "image.png", { type: "image/png" });
-
-  //         if (navigator.share) {
-  //           navigator
-  //             .share({
-  //               title: "Share Image",
-  //               files: [file],
-  //             })
-  //             .then(() => console.log("Share successful"))
-  //             .catch((error) => console.error("Error sharing:", error));
-  //         } else {
-  //           alert(
-  //             "Your browser does not support the Web Share API. Please use another method to share the image."
-  //           );
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error creating File:", error);
-  //       });
-  //   } else {
-  //     console.error("No data URL available");
-  //   }
-  // };
-
-  // const handleShare = async () => {
-  //   if (elementRef.current) {
-  //     const newFile = await toBlob(elementRef.current);
-  //     if (newFile) {
-  //       // Add a null check here
-  //       const data = {
-  //         files: [
-  //           new File([newFile], "image.png", {
-  //             type: newFile.type,
-  //           }),
-  //         ],
-  //         title: "Image",
-  //         text: "image",
-  //       };
-  //       try {
-  //         if (navigator && navigator.canShare && !navigator.canShare(data)) {
-  //           console.error("Can't share");
-  //         } else if (navigator && navigator.share) {
-  //           await navigator.share(data);
-  //         } else {
-  //           console.error("Sharing not supported");
-  //           alert("Your browser does not support Sharing");
-  //           htmlToImageConvert();
-  //         }
-  //       } catch (err) {
-  //         console.error(err);
-  //       }
-  //     } else {
-  //       console.error("Failed to convert element to blob");
-  //     }
-  //   } else {
-  //     console.error("elementRef.current is null");
-  //   }
-  // };
-
   const handleShare = async () => {
+    setSharing(true);
     if (elementRef.current) {
       const newFile = await toBlob(elementRef.current);
       if (newFile) {
@@ -153,12 +99,15 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
       console.error("elementRef.current is null");
       htmlToImageConvert();
     }
+    setSharing(false);
   };
 
   return (
     <div>
       <div
-        className="relative flex items-start justify-center bg-[#F1F1F1]"
+        className={`relative flex items-start justify-center bg-[#F1F1F1] ${
+          isSharing ? " p-4 mx-auto" : " "
+        }`}
         ref={elementRef}
       >
         <div className=" absolute bg-[#34A853] p-3 rounded-full border-4 h-[80px] w-[80px] border-[#F1F1F1] flex justify-center items-center ">
@@ -262,7 +211,40 @@ const PaymentSuccess: FC<successProps> = ({ paymentData }) => {
           </CardContent>
         </Card> */}
           <div className="w-full my-2 border-t-4 border-dashed "></div>
-          <FooterLink />
+          <div className="">
+            <Card
+              sx={{
+                minWidth: 100,
+                borderRadius: 4,
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <div className="flex flex-col gap-2">
+                  <button onClick={openVampayWebsite}>
+                    <img src={vampayLogo} alt="." height={50} width={120} />
+                  </button>
+                  <div className="flex flex-wrap gap-2">
+                    <img
+                      src={yesbank}
+                      alt="yes bank logo"
+                      height={30}
+                      width={40}
+                    />
+                    <img src={UPIlogo} alt="UPI Logo" height={30} width={40} />
+                    <img src={VISA} alt="VISA Logo" height={30} width={40} />
+                    <img
+                      src={MASTERCARD}
+                      alt="MASTERCARD Logo"
+                      height={30}
+                      width={40}
+                    />
+                    <img src={RUPAY} alt="RUPAY Logo" height={30} width={40} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
           <div className="flex gap-1 font-medium text-[14px] justify-center items-center text-white">
             <p>In partnership with </p>
             <img src={yesbank} alt="UPI Logo" height={40} width={60} />

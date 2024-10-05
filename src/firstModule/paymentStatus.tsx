@@ -1,7 +1,7 @@
 import { useFirstModule } from "../provider/invoiceProvider";
 import { Card, CardContent, Skeleton, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React, { FC, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import "./loader.css";
 import shareSvg from "../assets/sharenew12.svg";
 import downloads from "../assets/downloadnew12.svg";
@@ -22,8 +22,37 @@ interface pendingProps {
 
 const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
   const { invoiceData } = useFirstModule();
+  const [isSecond, setSecond] = useState("00");
+  const [isMinute, setMinute] = useState("00");
+
   const elementRef = useRef<HTMLDivElement | null>(null);
   const txn_time = paymentData?.txn_time;
+
+  useEffect(() => {
+    countdownTimer(300);
+  }, []);
+
+  function countdownTimer(durationInSeconds: number) {
+    let seconds = durationInSeconds;
+
+    const countdownInterval = setInterval(() => {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+
+      const displayMinutes = String(minutes).padStart(2, "0");
+      setMinute(displayMinutes);
+      const displaySeconds = String(remainingSeconds).padStart(2, "0");
+      setSecond(displaySeconds);
+      //   console.log(`${displayMinutes}:${displaySeconds}`);
+
+      seconds--;
+
+      if (seconds < 0) {
+        clearInterval(countdownInterval);
+        // console.log("Countdown finished!");
+      }
+    }, 1000);
+  }
 
   const htmlToImageConvert = () => {
     if (elementRef.current) {
@@ -110,9 +139,16 @@ const PaymentStatus: FC<pendingProps> = ({ paymentData }) => {
         <div className="w-16 h-16 border-t-4 border-b-4 border-purple-500 rounded-full animate-spin"></div>
       </div> */}
         <div className="w-full bg-[#E99A00] flex flex-col  gap-4 border-dashed  p-4 rounded-3xl mt-10 ">
-          <div className="mt-10 text-white">
-            <p className="text-center ">Processing</p>
-            {txn_time && <p className="text-center text-[26px]">{txn_time} </p>}
+          <div className="mt-10 text-center text-white">
+            <div className="mt-4 text-center text-white ">
+              <p className="font-semibold text-center text-[26px]">
+                Processing
+              </p>
+              <p className="">
+                {isMinute}:{isSecond}
+              </p>
+              {txn_time && <p className="text-center">{txn_time} </p>}
+            </div>
           </div>
 
           {/* <StyledBox
